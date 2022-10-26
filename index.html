@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Gandi800">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-Zenh87qX5JnK2Jl0vWa8Ck2rdkQ2Bzep5IDxbcnCeuOxjzrPF/et3URy9Bv1WTRi" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/alasql@2"></script>
+	<meta name="theme-color" content="#712cf9">
+  </head>
+  <body>
+    <header class="site-header sticky-top py-1">
+      <nav class="container d-flex flex-column flex-md-row justify-content-between">
+        <div class="row">
+          <div class="col">Risk</div>
+          <div class="col-6">
+			<select class="form-control" id="mapSelect">
+              <option value="castle_map">Castle</option>
+            </select>
+			</div>
+        </div>
+      </nav>
+    </header>
+    <main>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-8"><img class="img-fluid" src="castle_map.png" /></div>
+		  <div class="col">
+			<div class="row">
+			<div class="col">
+			
+		  </div>
+		  </div>
+		  </div>
+        </div>
+      </div>
+      <script>
+        alasql("CREATE TABLE Maps (MapName string)");
+        alasql("CREATE TABLE Teritories (MapName string, TeritoryName string, ContinentName string)");
+        alasql("CREATE TABLE Continents (MapName string, ContinentName string, TroopBonus number, Color string)");
+        alasql("CREATE TABLE TeritoryConnections (MapName string, TeritoryName string, ConenctedTeritoryNameName string)");
+        alasql(`INSERT INTO Maps (MapName) VALUES 
+																		('NumPad')
+																		`);
+        alasql(`INSERT INTO Teritories (MapName,TeritoryName,ContinentName) VALUES 
+																		('NumPad','Ter1','Row1'),
+																		('NumPad','Ter2','Row1'),
+																		('NumPad','Ter3','Row1'),
+																		('NumPad','Ter4','Row2'),
+																		('NumPad','Ter5','Row2'),
+																		('NumPad','Ter6','Row2'),
+																		('NumPad','Ter7','Row3'),
+																		('NumPad','Ter8','Row3'),
+																		('NumPad','Ter9','Row3'),
+																		('NumPad','Ter0','Row4')`);
+        alasql(`INSERT INTO Continents (MapName,ContinentName,TroopBonus,Color) VALUES 
+																		('NumPad','Row1','1','red'),
+																		('NumPad','Row2','2','blue'),
+																		('NumPad','Row3','3','green'),
+																		('NumPad','Row4','4','yellow')
+																		`);
+        alasql(`INSERT INTO TeritoryConnections (MapName,TeritoryName,ConenctedTeritoryNameName) VALUES 
+																		('NumPad','Ter1','Ter2'),
+																		('NumPad','Ter1','Ter4'),
+																		('NumPad','Ter2','Ter1'),
+																		('NumPad','Ter2','Ter5'),
+																		('NumPad','Ter2','Ter3'),
+																		('NumPad','Ter3','Ter2'),
+																		('NumPad','Ter3','Ter6'),
+																		('NumPad','Ter4','Ter1'),
+																		('NumPad','Ter4','Ter5'),
+																		('NumPad','Ter4','Ter7'),
+																		('NumPad','Ter5','Ter2'),
+																		('NumPad','Ter5','Ter4'),
+																		('NumPad','Ter5','Ter6'),
+																		('NumPad','Ter5','Ter8'),
+																		('NumPad','Ter6','Ter3'),
+																		('NumPad','Ter6','Ter5'),
+																		('NumPad','Ter6','Ter9'),
+																		('NumPad','Ter7','Ter4'),
+																		('NumPad','Ter7','Ter8'),
+																		('NumPad','Ter8','Ter7'),
+																		('NumPad','Ter8','Ter5'),
+																		('NumPad','Ter8','Ter9'),
+																		('NumPad','Ter8','Ter0'),
+																		('NumPad','Ter9','Ter6'),
+																		('NumPad','Ter9','Ter8'),
+																		('NumPad','Ter9','Ter0'),
+																		('NumPad','Ter0','Ter8'),
+																		('NumPad','Ter0','Ter9')
+																		`);
+        var res = alasql(`
+						SELECT 	t1.TeritoryName, 
+								COUNT(DISTINCT t2.TeritoryName) + COUNT(t2.ConenctedTeritoryNameName) Ct 
+						FROM TeritoryConnections t1 
+						LEFT JOIN TeritoryConnections t2 
+							on t1.ConenctedTeritoryNameName = t2.TeritoryName
+						GROUP BY t1.TeritoryName
+							`);
+        console.log(res);
+        var res = alasql(`
+						SELECT 	t1.TeritoryName, 
+								t2.TeritoryName t2,
+								t2.ConenctedTeritoryNameName 
+						FROM TeritoryConnections t1 
+						LEFT JOIN TeritoryConnections t2 
+							on t1.ConenctedTeritoryNameName = t2.TeritoryName
+						order by t1.TeritoryName, 
+								t2.TeritoryName,
+								t2.ConenctedTeritoryNameName 
+							`);
+        console.log(res.length)
+        var out = "";
+        for (i = 0; i < res.length; i++) {
+          out += res[i].TeritoryName + "," + res[i].t2 + "," + res[i].ConenctedTeritoryNameName + "\n\r";
+        }
+        console.log(out)
+      </script>
+    </main>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
+  </body>
+</html>
