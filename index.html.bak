@@ -257,7 +257,7 @@
 				name = $(this)[0].TerritoryName;
 			}
 			
-			console.log(color)
+
 			var row = connecTbl.row.add([
 				'<input type="checkbox"' + ($(this)[0].Checked ? ' checked ' : '') + 'class="blizzard" value="' + $(this)[0].TerritoryName +'" />',
 				'<span style="color:' + color + '">' + name + '</span>',
