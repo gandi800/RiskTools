@@ -7,31 +7,61 @@
     <meta name="author" content="Gandi800">
     <meta name="theme-color" content="#712cf9">
     <link rel="shortcut icon" href="#">
-    
-	<link rel="stylesheet" href="./css/bootstrap.min.css" />
-	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css" />
-    
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
   </head>
   <body>
     <header class="site-header sticky-top py-1">
-      <nav class="container d-flex flex-column flex-md-row justify-content-between">
-        <div class="col">
-          <h5>Risk Global Domination Helper</h5>
-        </div>
-        <div class="col"><select class="form-select" id="mapSelect">
-            <option value="-1">Select Map</option>
-          </select></div>
-      </nav>
+		<nav class="navbar navbar-expand-lg bg-primary">
+		  <div class="container-fluid">
+			<span class="navbar-brand">Risk Global Domination Helper</span>
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			  <ul class="navbar-nav">
+				<li class="nav-item dropdown">
+				  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Other Tools
+				  </a>
+				  <ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="https://ryanxzhu.github.io/RiskCalculator/">Roll Calculator</a></li>
+					<li><a class="dropdown-item" href="https://riskcalc.wixsite.com/riskblitzcalculator/calculator">Blitz Calculator</a></li>
+				  </ul>
+				</li>
+			  </ul>
+			  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+				<li class="nav-item dropdown">
+				  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+					Recources
+				  </a>
+				  <ul class="dropdown-menu">
+					<li><a class="dropdown-item" href="https://risk-global-domination.fandom.com/wiki/Risk">Risk: Global Domination Wiki</a></li>
+					<li><a class="dropdown-item" href="https://discord.com/invite/risk"><i class="fa-brands fa-discord"></i> Discord</a></li>
+					<li><hr class="dropdown-divider"></li>
+					<li><a class="dropdown-item" href="https://store.steampowered.com/app/1128810/RISK_Global_Domination/"><i class="fa-brands fa-steam"></i> Steam</a></li>
+					<li><a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.hasbro.riskbigscreen&hl=en_US&gl=US"><i class="fa-brands fa-google-play"></i> Android</a></li>
+					<li><a class="dropdown-item" href="https://apps.apple.com/us/app/risk-global-domination/id1051334048"><i class="fa-brands fa-app-store-ios"></i> IOS</a></li>
+
+				  </ul>
+				</li>
+			  </ul>
+			  <form class="w-25">
+				<select class="form-select" id="mapSelect">
+					  <option value="-1">Select Map</option>
+					</select>
+			  </form>
+			</div>
+		  </div>
+		</nav>
     </header>
     <main>
-      <div class="container-fluid">
+      <div class="container-fluid mt-3">
         <div class="row">
-          <div class="col-8"><img class="img-fluid" id="mapImg" src="" /></div>
-		  <div class="col-4">
+          <div class="col col-lg-8"><img class="img-fluid" id="mapImg" src="" /></div>
+          <div class="col col-lg-4">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">Connections</h5>
@@ -45,8 +75,7 @@
                     <th>Linked</th>
                   </tr>
                 </thead>
-                <tbody>
-				</tbody>
+                <tbody></tbody>
               </table>
               <tr>
             </div>
@@ -66,50 +95,30 @@
                     <th>Territories</th>
                   </tr>
                 </thead>
-                <tbody style="color:black;">
-				</tbody>
+                <tbody style="color:black;"></tbody>
               </table>
             </div>
           </div>
-		  <!-- <div class="col"> -->
-            <!-- <div class="card"> -->
-              <!-- <div class="card-body"> -->
-                <!-- <h5 class="card-title">Territories</h5> -->
-              <!-- </div> -->
-              <!-- <table id="terTbl" class="table table-striped"> -->
-                <!-- <thead> -->
-                  <!-- <tr> -->
-					<!-- <th>Continent</th> -->
-                    <!-- <th>Territory</th> -->
-					<!-- <th>Blizzard</th> -->
-                  <!-- </tr> -->
-                <!-- </thead> -->
-                <!-- <tbody> -->
-				<!-- </tbody> -->
-              <!-- </table> -->
-              <!-- <tr> -->
-            <!-- </div> -->
-          <!-- </div>		  <div class="col"> -->
-		  <div class="col">
+          <div class="col">
             <div class="card">
               <div class="card-body">
                 <h5 class="card-title">To Do</h5>
               </div>
-             <ol class="list-group">
-			  <li class="list-group-item">Verify calculations</li>
-			  <li class="list-group-item">Add all maps (will need help from others)</li>
-			  <li class="list-group-item">Continent sort for connections</li>
-			  <li class="list-group-item">Display numbers on map (Need to learn more JS or get help from others)</li>
-			  <li class="list-group-item">Indicate blizzards and portals by clicking on map (Need to learn more JS or get help from others)</li>
-			  <li class="list-group-item">Add portal calculation</li>
-			  <li class="list-group-item">Cap dice calculator</li>
-			  <li class="list-group-item">Army dice calculator</li>
-			</ol>
+              <ol class="list-group">
+                <li class="list-group-item">Verify calculations</li>
+                <li class="list-group-item">Add all maps (will need help from others)</li>
+                <li class="list-group-item">Continent sort for connections</li>
+                <li class="list-group-item">Display numbers on map (Need to learn more JS or get help from others)</li>
+                <li class="list-group-item">Indicate blizzards and portals by clicking on map (Need to learn more JS or get help from others)</li>
+                <li class="list-group-item">Add portal calculation</li>
+                <li class="list-group-item">Cap dice calculator</li>
+                <li class="list-group-item">Army dice calculator</li>
+              </ol>
             </div>
           </div>
         </div>
       </div>
-      <script>
+	  <script>
         
 		var mapName = '';
 		var conTble;
