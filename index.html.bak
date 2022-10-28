@@ -96,12 +96,14 @@
                 <h5 class="card-title">To Do</h5>
               </div>
              <ol class="list-group">
+			  <li class="list-group-item">Verify calculations</li>
+			  <li class="list-group-item">Add all maps (will need help from others)</li>
+			  <li class="list-group-item">Continent sort for connections</li>
 			  <li class="list-group-item">Display numbers on map (Need to learn more JS or get help from others)</li>
 			  <li class="list-group-item">Indicate blizzards and portals by clicking on map (Need to learn more JS or get help from others)</li>
 			  <li class="list-group-item">Add portal calculation</li>
 			  <li class="list-group-item">Cap dice calculator</li>
 			  <li class="list-group-item">Army dice calculator</li>
-			  <li class="list-group-item">Add all maps (will need help from others)</li>
 			</ol>
             </div>
           </div>
