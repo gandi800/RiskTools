@@ -49,9 +49,7 @@
 				</li>
 			  </ul>
 			  <form class="w-25">
-				<select class="form-select" id="mapSelect">
-					  <option value="-1">Select Map</option>
-					</select>
+				<select class="form-select" id="mapSelect"></select>
 			  </form>
 			</div>
 		  </div>
@@ -145,9 +143,16 @@
           $.each(maps, function() {
             $('#mapSelect').append($('<option>', {
               value: $(this)[0].Map,
-              text: $(this)[0].Name
+              text: ($(this)[0].Done == 0 ? 'To Do - ' : '') + $(this)[0].Name,
+			  disabled: $(this)[0].Done == 0
             }));
           });
+		  $('#mapSelect').prepend($('<option>', {
+              value: -1,
+              text: 'Select Map...',
+			  disabled: true,
+			  selected: true
+            }));
         }
 		
 		function initDataTables(){
@@ -172,7 +177,7 @@
 		}
 		
         async function CreateTables() {
-          alasql("CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number)");
+          alasql("CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number, Done number)");
           alasql("CREATE TABLE Continents (Map string ,Continent string, TroopBonus number, Color string, TerritoryCount number)");
           alasql("CREATE TABLE Territories (Map string, TerritoryName string, Continent string)");
           alasql("CREATE TABLE Connections (Map string, TerritoryName string, ConenctedTerritory string)");
@@ -182,7 +187,7 @@
 		
         async function LoadMaps() {
           await alasql.promise(`SELECT * INTO Maps FROM CSV("data/maps.csv", {headers:true})`);
-          return await alasql(`SELECT * FROM Maps`);
+          return await alasql(`SELECT * FROM Maps ORDER BY Done DESC, Name ASC`);
         }
 		
         async function LoadContinents() {
@@ -292,7 +297,9 @@
 		
         $('#mapSelect').change(function() {
             map = $(this).val();
-            MapChange();
+			if(map != -1){
+				MapChange();
+			}
           })
 		  
 		async function BlizzardUpdate(){
