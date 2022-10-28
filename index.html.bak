@@ -96,9 +96,9 @@
                 <h5 class="card-title">To Do</h5>
               </div>
              <ol class="list-group">
-			  <li class="list-group-item">Display numbers on map</li>
+			  <li class="list-group-item">Display numbers on map (Need to learn more JS or get help from others)</li>
+			  <li class="list-group-item">Indicate blizzards and portals by clicking on map (Need to learn more JS or get help from others)</li>
 			  <li class="list-group-item">Add portal calculation</li>
-			  <li class="list-group-item">Indicate blizzards and portals by clicking on map</li>
 			  <li class="list-group-item">Cap dice calculator</li>
 			  <li class="list-group-item">Army dice calculator</li>
 			  <li class="list-group-item">Add all maps (will need help from others)</li>
@@ -177,7 +177,7 @@
         async function LoadContinents() {
 		  
 		  await alasql.promise(`DELETE FROM Continents`);
-		  await alasql.promise(`SELECT * INTO Continents FROM CSV("data/` + map + `/Continents.csv", {headers:true})`)
+		  await alasql.promise(`SELECT * INTO Continents FROM CSV("data/` + map + `/continents.csv", {headers:true})`)
 
           conTble.rows().remove().draw();
 
@@ -189,14 +189,21 @@
 		
         async function LoadTerritories() {
           await alasql.promise(`DELETE FROM Territories`);
-          await alasql.promise(`SELECT * INTO Territories FROM CSV("data/` + map + `/Territories.csv", {headers:true})`)
+          await alasql.promise(`SELECT * INTO Territories FROM CSV("data/` + map + `/territories.csv", {headers:true})`)
         }
 		
         async function Loadconnections() {
 			await alasql.promise(`DELETE FROM Connections`);
-			await alasql.promise(`SELECT * INTO Connections FROM CSV("data/` + map + `/Connections.csv", {headers:true})`);
+			await alasql.promise(`SELECT * INTO Connections FROM CSV("data/` + map + `/connections.csv", {headers:true})`);
 			CalcConnections();
         }
+		
+		async function MapChange(){
+			$('#mapImg').attr("src", `./img/${map}.png`);
+			await LoadContinents();
+            await LoadTerritories();
+            await Loadconnections();
+		}
 		
 		async function CalcConnections(){
 		
@@ -249,7 +256,7 @@
 			`), function() {
 			var color;
 			var name;
-			if($(this)[0].Direct == 0 && $(this)[0].Linked == 0){
+			if($(this)[0].Checked){
 				color = "#C2E0F9";
 				name = "<span>&#10052;</span> " + $(this)[0].TerritoryName + " <span>&#10052;</span>";
 			} else {
@@ -261,8 +268,8 @@
 			var row = connecTbl.row.add([
 				'<input type="checkbox"' + ($(this)[0].Checked ? ' checked ' : '') + 'class="blizzard" value="' + $(this)[0].TerritoryName +'" />',
 				'<span style="color:' + color + '">' + name + '</span>',
-				$(this)[0].Direct == 0 ? "<span>&#10052;</span>" : $(this)[0].Direct ,
-				$(this)[0].Linked == 0 ? "<span>&#10052;</span>" : $(this)[0].Linked
+				$(this)[0].Checked ? "<span>&#10052;</span>" : $(this)[0].Direct ,
+				$(this)[0].Checked ? "<span>&#10052;</span>" : $(this)[0].Linked
 			]).draw();
 			
 			
@@ -274,10 +281,7 @@
 		
         $('#mapSelect').change(function() {
             map = $(this).val();
-            $('#mapImg').attr("src", `./img/${map}.png`);
-            LoadContinents();
-            LoadTerritories();
-            Loadconnections();
+            MapChange();
           })
 		  
 		async function BlizzardUpdate(){
