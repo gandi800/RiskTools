@@ -156,12 +156,14 @@ body {
         stroke: #0f0;
         stroke-width: 2px;
         stroke-linecap: round;
+        stroke-opacity:0.3;
     }
     .ad-Point {
         cursor: pointer;
         fill: #fff;
         stroke: #0f0;
         stroke-width: 3px;
+        stroke-opacity:0.3;
         -webkit-transition: fill .2s;
         -o-transition: fill .2s;
         transition: fill .2s;

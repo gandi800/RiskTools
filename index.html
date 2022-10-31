@@ -1,295 +1,364 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="Gandi800">
-    <meta name="theme-color" content="#712cf9">
-    <link rel="shortcut icon" href="#">
-    <link rel="stylesheet" href="./css/bootstrap.min.css" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
-  </head>
-  <body>
-    <header class="site-header sticky-top py-1">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="">
+	<meta name="author" content="Gandi800">
+	<meta name="theme-color" content="#712cf9">
+	<link rel="shortcut icon" href="#">
+	<link rel="stylesheet" href="./css/bootstrap.min.css" />
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+		integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="https://code.jquery.com/jquery-3.6.1.js"
+		integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3" crossorigin="anonymous">
+	</script>
+	<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
+</head>
+<body>
+	<style>
+		
+			color: #00ff00;
+			font-size: 24px;
+		};
+		path {
+			fill-opacity: 0;
+			fill: white;
+			stroke-opacity: 0;
+			stroke-width: 2px;
+			stroke: white;
+		}
+		.territory {
+			fill-opacity: 0;
+			fill: white;
+			stroke-opacity: 0;
+			stroke-width: 2px;
+			stroke: white;
+		}
+
+		.territory:hover {
+			fill-opacity: 0.2;
+			stroke-opacity: 0.5;
+		}
+		svg text {
+			text-anchor: middle;
+			dominant-baseline: middle;
+			color: white;
+			font: Oswald;
+			font-size: 20px;
+			text-shadow: rgb(0, 0, 0) 2px 0px 0px, rgb(0, 0, 0) 1.75517px 0.958851px 0px, rgb(0, 0, 0) 1.0806px 1.68294px 0px, rgb(0, 0, 0) 0.141474px 1.99499px 0px, rgb(0, 0, 0) -0.832294px 1.81859px 0px, rgb(0, 0, 0) -1.60229px 1.19694px 0px, rgb(0, 0, 0) -1.97998px 0.28224px 0px, rgb(0, 0, 0) -1.87291px -0.701566px 0px, rgb(0, 0, 0) -1.30729px -1.5136px 0px, rgb(0, 0, 0) -0.421592px -1.95506px 0px, rgb(0, 0, 0) 0.567324px -1.91785px 0px, rgb(0, 0, 0) 1.41734px -1.41108px 0px, rgb(0, 0, 0) 1.92034px -0.558831px 0px;		}
+	</style>
+	<header class="site-header sticky-top py-1">
 		<nav class="navbar navbar-expand-lg bg-primary">
-		  <div class="container-fluid">
-			<span class="navbar-brand">Risk Global Domination Helper</span>
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			  <ul class="navbar-nav">
-				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Other Tools
-				  </a>
-				  <ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="https://ryanxzhu.github.io/RiskCalculator/">Roll Calculator</a></li>
-					<li><a class="dropdown-item" href="https://riskcalc.wixsite.com/riskblitzcalculator/calculator">Blitz Calculator</a></li>
-				  </ul>
-				</li>
-			  </ul>
-			  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-				<li class="nav-item dropdown">
-				  <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-					Recources
-				  </a>
-				  <ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="https://risk-global-domination.fandom.com/wiki/Risk">Risk: Global Domination Wiki</a></li>
-					<li><a class="dropdown-item" href="https://discord.com/invite/risk"><i class="fa-brands fa-discord"></i> Discord</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="/svg-path-builder/svg-path-builder/dist/index.html">SVG Mapper</a></li>
-					<li><hr class="dropdown-divider"></li>
-					<li><a class="dropdown-item" href="https://store.steampowered.com/app/1128810/RISK_Global_Domination/"><i class="fa-brands fa-steam"></i> Steam</a></li>
-					<li><a class="dropdown-item" href="https://play.google.com/store/apps/details?id=com.hasbro.riskbigscreen&hl=en_US&gl=US"><i class="fa-brands fa-google-play"></i> Android</a></li>
-					<li><a class="dropdown-item" href="https://apps.apple.com/us/app/risk-global-domination/id1051334048"><i class="fa-brands fa-app-store-ios"></i> iOS</a></li>
-				  </ul>
-				</li>
-			  </ul>
-			  <form class="w-25">
-				<select class="form-select" id="mapSelect"></select>
-			  </form>
+			<div class="container-fluid">
+				<span class="navbar-brand">Risk Global Domination Helper</span>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">
+								Other Tools
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item" href="https://ryanxzhu.github.io/RiskCalculator/">Roll
+										Calculator</a></li>
+								<li><a class="dropdown-item"
+										href="https://riskcalc.wixsite.com/riskblitzcalculator/calculator">Blitz
+										Calculator</a></li>
+							</ul>
+						</li>
+					</ul>
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0">
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+								aria-expanded="false">
+								Recources
+							</a>
+							<ul class="dropdown-menu">
+								<li><a class="dropdown-item"
+										href="https://risk-global-domination.fandom.com/wiki/Risk">Risk: Global
+										Domination Wiki</a></li>
+								<li><a class="dropdown-item" href="https://discord.com/invite/risk"><i
+											class="fa-brands fa-discord"></i> Discord</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item"
+										href="/svg-path-builder/svg-path-builder/dist/index.html">SVG Mapper</a></li>
+								<li>
+									<hr class="dropdown-divider">
+								</li>
+								<li><a class="dropdown-item"
+										href="https://store.steampowered.com/app/1128810/RISK_Global_Domination/"><i
+											class="fa-brands fa-steam"></i> Steam</a></li>
+								<li><a class="dropdown-item"
+										href="https://play.google.com/store/apps/details?id=com.hasbro.riskbigscreen&hl=en_US&gl=US"><i
+											class="fa-brands fa-google-play"></i> Android</a></li>
+								<li><a class="dropdown-item"
+										href="https://apps.apple.com/us/app/risk-global-domination/id1051334048"><i
+											class="fa-brands fa-app-store-ios"></i> iOS</a></li>
+							</ul>
+						</li>
+					</ul>
+					<form class="w-25">
+						<select class="form-select" id="mapSelect"></select>
+					</form>
+				</div>
 			</div>
-		  </div>
 		</nav>
-    </header>
-    <main>
-      <div class="container-fluid mt-3">
-        <div class="row">
-		<style>
-		svg text{
-  text-anchor: middle;
-  dominant-baseline: middle;
-  color: #00ff00;
-  font-size:24px;
-}
-</style>
-			<div class="col col-lg-8" id="imgCont">
-				<svg viewBox="0 0 1400 726" preserveAspectRatio="xMinYMin meet">
-					<image id="mapImg" width="1400" height="726" xlink:href="/img/castle.png"></image>
-					<path id="pathTest" class="pathTest" stroke="#00FF00" stroke-width="2" fill="white" style="stroke-opacity:0; fill-opacity:0" d="M 715 390 L 785 380 L 800 460 L 755 470 L 725 450 z" />
-					<path class="pathTest" stroke="#00FF00" stroke-width="2" fill="white" style="stroke-opacity:0; fill-opacity:0" d="M 866 448 L 800 460 L 784 380 L 849 370 z" />
-				</svg>
+	</header>
+	<main>
+		<div class="container-fluid mt-3">
+			<div class="row">
+				<div class="col col-lg-8" id="imgCont">
+					<svg id="mapSvg" viewBox="0 0 1400 726" preserveAspectRatio="xMinYMin meet">
+						<image id="mapImg" width="1400" height="726" xlink:href=""></image>
+					</svg>
+				</div>
+				<div class="col col-lg-4">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Connections</h5>
+						</div>
+						<table id="connecTbl" class="table table-striped">
+							<thead>
+								<tr>
+									<th><span>&#10052;</span></th>
+									<th>Territory</th>
+									<th>Direct</th>
+									<th>Linked</th>
+								</tr>
+							</thead>
+							<tbody></tbody>
+						</table>
+						<tr>
+					</div>
+				</div>
 			</div>
-			<script>
-				$('.pathTest').mouseover(function(){$(this).css("fill-opacity",.5)})
-				$('.pathTest').mouseout(function(){$(this).css("fill-opacity",0)})
-				
-				function addText(p)
-				{
-					if (typeof p.getBBox == 'function') {
-						var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
-						var b = p.getBBox();
-						t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
-						t.textContent = "a";
-						t.setAttribute("fill", "red");
-						t.setAttribute("font-size", "14");
-						p.parentNode.insertBefore(t, p.nextSibling);
-					}
-				}
+			<div class="row mt-4">
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">Continents</h5>
+						</div>
+						<table id="contTbl" class="table">
+							<thead>
+								<tr>
+									<th>Continent</th>
+									<th>Bonus</th>
+									<th>Territories</th>
+								</tr>
+							</thead>
+							<tbody style="color:black;"></tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col">
+					<div class="card">
+						<div class="card-body">
+							<h5 class="card-title">To Do</h5>
+						</div>
+						<ol class="list-group">
+							<li class="list-group-item">Verify calculations</li>
+							<li class="list-group-item">Add all maps (will need help from others)</li>
+							<li class="list-group-item">Continent sort for connections</li>
+							<li class="list-group-item">Display numbers on map (Need to learn more JS or get help from
+								others)</li>
+							<li class="list-group-item">Indicate blizzards and portals by clicking on map (Need to learn
+								more JS or get help from others)</li>
+							<li class="list-group-item">Add portal calculation</li>
+							<li class="list-group-item">Cap dice calculator</li>
+							<li class="list-group-item">Army dice calculator</li>
+						</ol>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
 
-				var paths = document.querySelectorAll("path");
-				for (var p in paths)
-				{
-					addText(paths[p])
-				}
-			</script>
-          <div class="col col-lg-4">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Connections</h5>
-              </div>
-              <table id="connecTbl" class="table table-striped">
-                <thead>
-                  <tr>
-                    <th><span>&#10052;</span></th>
-                    <th>Territory</th>
-                    <th>Direct</th>
-                    <th>Linked</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-              <tr>
-            </div>
-          </div>
-        </div>
-        <div class="row mt-4">
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">Continents</h5>
-              </div>
-              <table id="contTbl" class="table">
-                <thead>
-                  <tr>
-                    <th>Continent</th>
-                    <th>Bonus</th>
-                    <th>Territories</th>
-                  </tr>
-                </thead>
-                <tbody style="color:black;"></tbody>
-              </table>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="card-body">
-                <h5 class="card-title">To Do</h5>
-              </div>
-              <ol class="list-group">
-                <li class="list-group-item">Verify calculations</li>
-                <li class="list-group-item">Add all maps (will need help from others)</li>
-                <li class="list-group-item">Continent sort for connections</li>
-                <li class="list-group-item">Display numbers on map (Need to learn more JS or get help from others)</li>
-                <li class="list-group-item">Indicate blizzards and portals by clicking on map (Need to learn more JS or get help from others)</li>
-                <li class="list-group-item">Add portal calculation</li>
-                <li class="list-group-item">Cap dice calculator</li>
-                <li class="list-group-item">Army dice calculator</li>
-              </ol>
-            </div>
-          </div>
-        </div>
-      </div>
-	  <script src='https://unpkg.com/panzoom@9.4.0/dist/panzoom.min.js'></script>
 		<script>
+			$(document).ready(function () {
+				var element = document.querySelector('#imgCont')
+
+				panzoom(element, {
+					beforeMouseDown: function (e) {
+						var shouldIgnore = !e.shiftKey;
+						return shouldIgnore;
+					}
+				})
+			})
+
+			var mapName = '';
+			var conTble;
+			var connecTbl;
+
+			const colors = {
+				'red': '#fd7670',
+				'blue': '#6f7be6',
+				'green': '#8bec8e',
+				'yellow': '#f8ebad',
+				'teal': '#3fdde9',
+				'purple': '#df95f3'
+			}
+
+			$(document).ready(function () {
+				main();
+			})
+
+			async function main() {
+				await CreateTables();
+				initDataTables();
+				var maps = await LoadMaps();
+				$.each(maps, function () {
+					$('#mapSelect').append($('<option>', {
+						value: $(this)[0].Map,
+						text: ($(this)[0].Done == 0 ? 'To Do - ' : '') + $(this)[0].Name,
+						disabled: $(this)[0].Done == 0
+					}));
+				});
+				$('#mapSelect').prepend($('<option>', {
+					value: -1,
+					text: 'Select Map...',
+					disabled: true,
+					selected: true
+				}));
+			}
+
+			function initDataTables() {
+				conTble = $('#contTbl').DataTable({
+					paging: false,
+					ordering: true,
+					info: false,
+					searching: false
+				});
+
+
+
+				connecTbl = $('#connecTbl').DataTable({
+					paging: false,
+					info: false,
+					scrollY: '400px'
+				});
+			}
+
+			async function CreateTables() {
+				alasql(
+					"CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number, Done number)"
+				);
+				alasql(
+					"CREATE TABLE Continents (Map string ,Continent string, TroopBonus number, Color string, TerritoryCount number)"
+				);
+				alasql("CREATE TABLE Territories (Map string, TerritoryName string, Continent string, Points string)");
+				alasql("CREATE TABLE Connections (Map string, TerritoryName string, ConenctedTerritory string)");
+				alasql("CREATE TABLE TmpConnections (Map string, TerritoryName string, ConenctedTerritory string)");
+				alasql("CREATE TABLE Blizzards (BlizzardTerritoryName string)");
+			}
+
+			async function LoadMaps() {
+				await alasql.promise(`SELECT * INTO Maps FROM CSV("data/maps.csv", {headers:true})`);
+				return await alasql(`SELECT * FROM Maps ORDER BY Done DESC, Name ASC`);
+			}
+
+			async function LoadContinents() {
+
+				await alasql.promise(`DELETE FROM Continents`);
+				await alasql.promise(`SELECT * INTO Continents FROM CSV("data/` + map + `/continents.csv", {headers:true})`)
+
+				conTble.rows().remove().draw();
+
+				$.each(alasql(`SELECT * FROM Continents`), function () {
+					var row = conTble.row.add([$(this)[0].Continent, $(this)[0].TroopBonus, $(this)[0]
+						.TerritoryCount, $(this)[0].Color
+					]).draw().node();
+					$(row).css('background-color', colors[$(this)[0].Color]);
+				})
+			}
+
+			async function LoadTerritories() {
+				await alasql.promise(`DELETE FROM Territories`);
+				await alasql.promise(`SELECT * INTO Territories FROM CSV("data/` + map +
+					`/territories.csv", {headers:true})`)
+			}
+
+			async function Loadconnections() {
+				await alasql.promise(`DELETE FROM Connections`);
+				await alasql.promise(`SELECT * INTO Connections FROM CSV("data/` + map +
+					`/connections.csv", {headers:true})`);
+				CalcConnections();
+			}
+
+			async function MapChange() {
+				$('#mapImg').attr("xlink:href", `./img/${map}.png`);
+				await LoadContinents();
+				await LoadTerritories();
+				await Loadconnections();
+				await populateTerList();
+				drawTerritories();
+				addTerritoriesName();
+			}
+
+			var terList;
+
+			async function populateTerList() {
+				terList = alasql(`SELECT * FROM Territories`);
+			}
+
+			function drawTerritories() {
+				var svg = document.getElementById('mapSvg');
+
+				$.each(terList, function () {
+					let t = $(this)[0];
+
+					var terPath = document.createElementNS("http://www.w3.org/2000/svg",'path'); //Create a path in SVG's namespace
+					terPath.setAttribute("d", t.Points);
+					terPath.setAttribute("data-name", t.TerritoryName);
+					terPath.setAttribute("data-continent", t.Continent);
+					terPath.setAttribute("class","territory");
+					svg.appendChild(terPath);
+					
+				})
+			}
+
+			function addTerritoriesName(){
+				var paths = $('path');
 			
-		$(document).ready(function(){
+				$.each(paths,function(){
+					//console.log($(this).attr("data-name"))
+					addText($(this));
+				})
+				// for (var p in paths) {
+				// 	console.log(p)
+				// 	addText(paths[p])
+				// }
+			}
 
-		<!-- // just grab a DOM element -->
-		var element = document.querySelector('#imgCont')
+			function addText(d) {
+				var p = d[0]
+				//if (typeof p.getBBox == 'function') {
+					var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+					var b = p.getBBox();
+					t.setAttribute("transform", "translate(" + (b.x + b.width / 2) + " " + (b.y + b.height / 2) + ")");
+					t.textContent = d.attr("data-name");
+					t.setAttribute("class", "names");
+					p.parentNode.insertBefore(t, p.nextSibling);
+				//}
+			}
 
-			// And pass it to panzoom
-		panzoom(element,{
-			beforeMouseDown: function(e) {
-				// allow mouse-down panning only if altKey is down. Otherwise - ignore
-				var shouldIgnore = !e.shiftKey;
-				return shouldIgnore;
-			  }
-		  })
-		})
-				
-		
-	
-		</script>
-	  <script>
-        
-		var mapName = '';
-		var conTble;
-		var connecTbl;
-		<!-- var terTbl; -->
-		
-		const colors = {
-			'red':'#fd7670',
-			'blue':'#6f7be6',
-			'green':'#8bec8e',
-			'yellow':'#f8ebad',
-			'teal':'#3fdde9',
-			'purple':'#df95f3'
-		}
-		
-        $(document).ready(function() {
-          main();
-        })
-		
-        async function main() {
-          await CreateTables();
-		  initDataTables();
-          var maps = await LoadMaps();
-          $.each(maps, function() {
-            $('#mapSelect').append($('<option>', {
-              value: $(this)[0].Map,
-              text: ($(this)[0].Done == 0 ? 'To Do - ' : '') + $(this)[0].Name,
-			  disabled: $(this)[0].Done == 0
-            }));
-          });
-		  $('#mapSelect').prepend($('<option>', {
-              value: -1,
-              text: 'Select Map...',
-			  disabled: true,
-			  selected: true
-            }));
-        }
-		
-		function initDataTables(){
-			conTble = $('#contTbl').DataTable({
-				paging: false,
-				ordering: true,
-				info: false,
-				searching: false
-			});
-			
-			<!-- terTbl = $('#terTbl').DataTable({ -->
-				<!-- paging: false, -->
-				<!-- scrollY: '300px', -->
-				<!-- scrollCollapse: true, -->
-			<!-- }); -->
-			
-			connecTbl = $('#connecTbl').DataTable({
-				paging: false,
-				info: false,
-				scrollY: '400px'
-			});
-		}
-		
-        async function CreateTables() {
-          alasql("CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number, Done number)");
-          alasql("CREATE TABLE Continents (Map string ,Continent string, TroopBonus number, Color string, TerritoryCount number)");
-          alasql("CREATE TABLE Territories (Map string, TerritoryName string, Continent string)");
-          alasql("CREATE TABLE Connections (Map string, TerritoryName string, ConenctedTerritory string)");
-          alasql("CREATE TABLE TmpConnections (Map string, TerritoryName string, ConenctedTerritory string)");
-          alasql("CREATE TABLE Blizzards (BlizzardTerritoryName string)");
-        }
-		
-        async function LoadMaps() {
-          await alasql.promise(`SELECT * INTO Maps FROM CSV("data/maps.csv", {headers:true})`);
-          return await alasql(`SELECT * FROM Maps ORDER BY Done DESC, Name ASC`);
-        }
-		
-        async function LoadContinents() {
-		  
-		  await alasql.promise(`DELETE FROM Continents`);
-		  await alasql.promise(`SELECT * INTO Continents FROM CSV("data/` + map + `/continents.csv", {headers:true})`)
+			async function CalcConnections() {
 
-          conTble.rows().remove().draw();
+				$.each($('.blizzard:checked'), async function () {
+					await alasql.promise(`INSERT INTO Blizzards VALUES('` + $(this).val() + `')`);
+				});
 
-          $.each(alasql(`SELECT * FROM Continents`), function() {
-			var row = conTble.row.add( [$(this)[0].Continent,$(this)[0].TroopBonus,$(this)[0].TerritoryCount,$(this)[0].Color] ).draw().node();
-			$(row).css('background-color',colors[$(this)[0].Color]);
-          })
-        }
-		
-        async function LoadTerritories() {
-          await alasql.promise(`DELETE FROM Territories`);
-          await alasql.promise(`SELECT * INTO Territories FROM CSV("data/` + map + `/territories.csv", {headers:true})`)
-        }
-		
-        async function Loadconnections() {
-			await alasql.promise(`DELETE FROM Connections`);
-			await alasql.promise(`SELECT * INTO Connections FROM CSV("data/` + map + `/connections.csv", {headers:true})`);
-			CalcConnections();
-        }
-		
-		async function MapChange(){
-			$('#mapImg').attr("src", `./img/${map}.png`);
-			await LoadContinents();
-            await LoadTerritories();
-            await Loadconnections();
-		}
-		
-		async function CalcConnections(){
-		
-			$.each($('.blizzard:checked'),async function(){
-				await alasql.promise(`INSERT INTO Blizzards VALUES('` + $(this).val() + `')`);
-			});			
-		
-			connecTbl.rows().remove().draw();
-		  
-			await alasql.promise(`DELETE FROM TmpConnections`);
-			await alasql.promise(`
+				connecTbl.rows().remove().draw();
+
+				await alasql.promise(`DELETE FROM TmpConnections`);
+				await alasql.promise(`
 				INSERT INTO TmpConnections
 				SELECT 
 					c.Map, 
@@ -302,13 +371,10 @@
 						OR c.ConenctedTerritory = b.BlizzardTerritoryName
 				
 				WHERE b.BlizzardTerritoryName IS NULL
-				
-						
-				
 			`);
-		
-		  
-			$.each(alasql(`
+
+
+				$.each(alasql(`
 				SELECT 
 					t.TerritoryName,
 					c.Color,
@@ -328,48 +394,50 @@
 					c.Color,
 					b.BlizzardTerritoryName
 				
-			`), function() {
-			var color;
-			var name;
-			if($(this)[0].Checked){
-				color = "#C2E0F9";
-				name = "<span>&#10052;</span> " + $(this)[0].TerritoryName + " <span>&#10052;</span>";
-			} else {
-				color = colors[$(this)[0].Color];
-				name = $(this)[0].TerritoryName;
-			}
-			
+			`), function () {
+					var color;
+					var name;
+					if ($(this)[0].Checked) {
+						color = "#C2E0F9";
+						name = "<span>&#10052;</span> " + $(this)[0].TerritoryName + " <span>&#10052;</span>";
+					} else {
+						color = colors[$(this)[0].Color];
+						name = $(this)[0].TerritoryName;
+					}
 
-			var row = connecTbl.row.add([
-				'<input type="checkbox"' + ($(this)[0].Checked ? ' checked ' : '') + 'class="blizzard" value="' + $(this)[0].TerritoryName +'" />',
-				'<span style="color:' + color + '">' + name + '</span>',
-				$(this)[0].Checked ? "<span>&#10052;</span>" : $(this)[0].Direct ,
-				$(this)[0].Checked ? "<span>&#10052;</span>" : $(this)[0].Linked
-			]).draw();
-			
-			
-			
-          })
-		  
-		  await alasql.promise(`DELETE FROM Blizzards`);
-		}
-		
-        $('#mapSelect').change(function() {
-            map = $(this).val();
-			if(map != -1){
-				MapChange();
+
+					var row = connecTbl.row.add([
+						'<input type="checkbox"' + ($(this)[0].Checked ? ' checked ' : '') +
+						'class="blizzard" value="' + $(this)[0].TerritoryName + '" />',
+						'<span style="color:' + color + '">' + name + '</span>',
+						$(this)[0].Checked ? "<span>&#10052;</span>" : $(this)[0].Direct,
+						$(this)[0].Checked ? "<span>&#10052;</span>" : $(this)[0].Linked
+					]).draw();
+
+
+
+				})
+
+				await alasql.promise(`DELETE FROM Blizzards`);
 			}
-          })
-		  
-		async function BlizzardUpdate(){
-			await CalcConnections();
-		}
-		  
-		  $(document).on("change",".blizzard",function(){
-			$(this).attr("checked",true);
+
+			$('#mapSelect').change(function () {
+				map = $(this).val();
+				if (map != -1) {
+					MapChange();
+				}
+			})
+
+			async function BlizzardUpdate() {
+				await CalcConnections();
+			}
+
+			$(document).on("change", ".blizzard", function () {
+				$(this).attr("checked", true);
 				BlizzardUpdate();
-		  })
-      </script>
-    </main>
-  </body>
+			})
+		</script>
+	</main>
+</body>
+
 </html>
