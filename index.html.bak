@@ -63,7 +63,8 @@
 		svg text{
   text-anchor: middle;
   dominant-baseline: middle;
-  color: #00ff00
+  color: #00ff00;
+  font-size:24px;
 }
 </style>
 			<div class="col col-lg-8" id="imgCont">
@@ -79,21 +80,23 @@
 				$('.pathTest').mouseout(function(){$(this).css("fill-opacity",0)})
 				
 				function addText(p)
-{
-    var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+				{
+					if (typeof p.getBBox == 'function') {
+						var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+						var b = p.getBBox();
+						t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
+						t.textContent = "a";
+						t.setAttribute("fill", "red");
+						t.setAttribute("font-size", "14");
+						p.parentNode.insertBefore(t, p.nextSibling);
+					}
+				}
 
-    t.setAttribute("transform", "translate(" + (b.x + b.width/2) + " " + (b.y + b.height/2) + ")");
-    t.textContent = "a";
-    t.setAttribute("fill", "red");
-    t.setAttribute("font-size", "14");
-    p.parentNode.insertBefore(t, p.nextSibling);
-}
-
-var paths = document.querySelectorAll("path");
-for (var p in paths)
-{
-    addText(paths[p])
-}
+				var paths = document.querySelectorAll("path");
+				for (var p in paths)
+				{
+					addText(paths[p])
+				}
 			</script>
           <div class="col col-lg-4">
             <div class="card">
