@@ -226,23 +226,39 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Map Info</h5>
+                                <h5 class="card-title">Step 1 - Map Info</h5>
                             </div>
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Continent</th>
-                                        <th>Bonus</th>
-                                        <th>Territories</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="color: black">
-                                </tbody>
-                            </table>
+                            <div class="row">
+                                <div class="col">
+                                    <label>MapId</label>
+                                    <input type="text" id="miMapId" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>MapName</label>
+                                    <input type="text" id="miMapId" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col"><label>Blizzards</label>
+                                    <input type="text" id="miMapId" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>Portals</label>
+                                    <input type="text" id="miMapId" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>Territories</label>
+                                    <input type="text" id="miMapId" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>Continents</label>
+                                    <input type="text" id="miMapId" class="form-control" />
+                                </div>
+                            </div>
                         </div>
                         <div class="card mt-2">
                             <div class="card-body">
-                                <h5 class="card-title">Continents</h5>
+                                <h5 class="card-title">Step 2 - Continents</h5>
                             </div>
                             <table id="contTbl" class="table">
                                 <thead>
@@ -259,7 +275,7 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Connections</h5>
+                                <h5 class="card-title">Step 3 - Territories</h5>
                             </div>
                             <table id="connecTbl" class="table table-striped">
                                 <thead>
@@ -317,7 +333,7 @@
                             })
                         );
                     });
-                    
+
                     $("#mapSelect").prepend(
                         $("<option>", {
                             value: -1,
@@ -416,12 +432,13 @@
 
                 async function MapChange() {
                     $("#mapImg").attr("src", `./img/${map}.png`);
+                    var img = document.getElementById("mapImg");
+                    window.initCanvas(img);
+
                     await LoadContinents();
                     await LoadTerritories();
                     await Loadconnections();
                     await populateTerList();
-                    var img = document.getElementById("mapImg");
-                    window.initCanvas(img);
                 }
 
                 var terList;
