@@ -1,24 +1,20 @@
 <!DOCTYPE html>
 <html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>CodePen - SVG Path Builder</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
-<link rel="stylesheet" href="./style.css">
-<style>
-	.ad-SVG {
-		background-image: url("/img/castle.png");
-	}
-</style>
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<div id="app" class="ad-App">
-</div>
-<!-- partial -->
-	<script src="https://code.jquery.com/jquery-3.6.1.js" integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-
-<script src='https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.min.js'></script>
-<script src='https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.min.js'></script><script  src="./script.js"></script>
-</body>
+	<head>
+		<meta charset="UTF-8">
+		<title>Mapper</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+		<link rel="stylesheet" href="./style.css">
+		<style>
+			.ad-SVG {
+			background-image: url("/img/castle_notext.png");
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app" class="ad-App"></div>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react.min.js'></script>
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/react/0.14.0/react-dom.min.js'></script>
+		<script src="./script.js"></script>
+	</body>
 </html>
