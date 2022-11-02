@@ -25,20 +25,14 @@
 
 <body>
     <style>
-        path {
-            fill-opacity: 0;
-            fill: white;
-            stroke-opacity: 0;
-            stroke-width: 2px;
-            stroke: white;
-        }
+        
 
         .territory {
             fill-opacity: 0;
             fill: white;
-            stroke-opacity: 0;
+            stroke-opacity: 1;
             stroke-width: 2px;
-            stroke: white;
+            stroke: rgb(255, 255, 255);
         }
 
         .territory:hover {
@@ -64,6 +58,45 @@
                 rgb(0, 0, 0) 0.567324px -1.91785px 0px,
                 rgb(0, 0, 0) 1.41734px -1.41108px 0px,
                 rgb(0, 0, 0) 1.92034px -0.558831px 0px;
+        }
+
+        .wrapper {
+            top: 80px;
+            width: 100vw;
+            overflow: auto;
+        }
+
+        .content {
+            position: relative;
+        }
+
+        .canvas {
+            position: absolute;
+        }
+
+        .canvas:hover {
+            cursor: default;
+        }
+
+        .picture {
+            position: absolute;
+        }
+
+        .button {
+            padding: 4px;
+            margin: 4px;
+            border: 1px solid black;
+            float: left;
+        }
+
+        .button:hover {
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-mode {
+            cursor: copy !important;
         }
     </style>
     <header class="site-header sticky-top py-1">
@@ -141,46 +174,6 @@
             </div>
         </nav>
     </header>
-    <style>
-        .wrapper {
-            top: 80px;
-            width: 100vw;
-            overflow: auto;
-        }
-
-        .content {
-            position: relative;
-        }
-
-        .canvas {
-            position: absolute;
-        }
-
-        .canvas:hover {
-            cursor: default;
-        }
-
-        .picture {
-            position: absolute;
-        }
-
-        .button {
-            padding: 4px;
-            margin: 4px;
-            border: 1px solid black;
-            float: left;
-        }
-
-        .button:hover {
-            background-color: blue;
-            color: white;
-            cursor: pointer;
-        }
-
-        .add-mode {
-            cursor: copy !important;
-        }
-    </style>
     <main>
         <div class="container-fluid mt-3">
             <div class="row">
@@ -214,10 +207,12 @@
             <div class="col" id="imgCont">
                 <div class="wrapper">
                     <div class="content">
+                        <svg id="mapSvg" class="canvas" width="1400" height="726" viewBox="0 0 1400 726" style="position:absolutes;top:0;left:0;"
+                            preserveAspectRatio="xMinYMin meet"></svg>
                         <image id="mapImg" width="1400" height="726" src=""></image>
-
                         <canvas class="canvas" id="resultCanvas" width="1400" height="726"
-                            style="position:absolutes;top:0;left:0;" onmouseup="onMouseUp.apply(this, arguments)"
+                            style="position:absolutes;top:0;left:0;" 
+                            onmouseup="onMouseUp.apply(this, arguments)"
                             onmousedown="onMouseDown.apply(this, arguments)"
                             onmousemove="onMouseMove.apply(this, arguments)"></canvas>
                     </div>
@@ -281,7 +276,6 @@
                                             </div>
                                         </div>
                                     </div>
-
                                     <table id="contTbl" class="table">
                                         <thead>
                                             <tr>
@@ -303,16 +297,15 @@
                             <div class="card-body">
                                 <h5 class="card-title">Step 3 - Territories</h5>
                             </div>
-                            <table id="connecTbl" class="table table-striped">
+                            <table id="terrTbl" class="table">
                                 <thead>
                                     <tr>
-                                        <th><span>&#10052;</span></th>
                                         <th>Territory</th>
-                                        <th>Direct</th>
-                                        <th>Linked</th>
+                                        <th>Continent</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody style="color: black"></tbody>
                             </table>
                             <tr></tr>
                         </div>
@@ -362,6 +355,7 @@
                 var mapName = "";
                 var conTble;
                 var connecTbl;
+                var terrTbl;
                 var maps;
                 var conts;
                 var terrs;
@@ -441,7 +435,7 @@
                         searching: false,
                     });
 
-                    connecTbl = $("#connecTbl").DataTable({
+                    terrTbl = $("#terrTbl").DataTable({
                         paging: false,
                         info: false,
                         scrollY: "400px",
@@ -458,13 +452,6 @@
                     alasql(
                         "CREATE TABLE Territories (Map string, TerritoryName string, Continent string, Points string)"
                     );
-                    alasql(
-                        "CREATE TABLE Connections (Map string, TerritoryName string, ConenctedTerritory string)"
-                    );
-                    alasql(
-                        "CREATE TABLE TmpConnections (Map string, TerritoryName string, ConenctedTerritory string)"
-                    );
-                    alasql("CREATE TABLE Blizzards (BlizzardTerritoryName string)");
                 }
 
                 async function LoadMaps() {
@@ -527,7 +514,7 @@
                     $('#contModal').modal('show');
                 }
 
-                function NewCont(){
+                function NewCont() {
                     $('#ciContName').val("");
                     $('#ciBonus').val(1);
                     $('#ciTerr').val(1);
@@ -536,12 +523,11 @@
 
                     UpdateColorDdl();
 
-                    $('#contModal').modal('show'); 
+                    $('#contModal').modal('show');
                 }
-                
-                $('#contModal').on('shown.bs.modal', function(){
+
+                $('#contModal').on('shown.bs.modal', function () {
                     $('#ciContName').focus();
-                    console.log('test')
                 });
 
                 function ContAddUpdate() {
@@ -581,17 +567,14 @@
                     $('#contModal').modal('hide');
                 }
 
-                function UpdateColorDdl(){
-                    if($('#contColor').val()){
-                        $('#contColor').css("background-color",colors[($('#contColor').val())]);
+                function UpdateColorDdl() {
+                    if ($('#contColor').val()) {
+                        $('#contColor').css("background-color", colors[($('#contColor').val())]);
                     } else {
-                        $('#contColor').css("background-color","");
+                        $('#contColor').css("background-color", "");
                     }
-                    
+
                 }
-
-               
-
 
                 async function LoadTerritories() {
                     await alasql.promise(`DELETE FROM Territories`);
@@ -600,106 +583,88 @@
                         map +
                         `/territories.csv", {headers:true})`
                     );
+                    DrawTerritories();
                 }
 
-                async function Loadconnections() {
-                    await alasql.promise(`DELETE FROM Connections`);
-                    await alasql.promise(
-                        `SELECT * INTO Connections FROM CSV("data/` +
-                        map +
-                        `/connections.csv", {headers:true})`
-                    );
-                    CalcConnections();
-                }
 
-                var terList;
+                function DrawTerritories() {
+                    terrTbl.rows().remove().draw();
+                    var svg = document.getElementById("mapSvg");
 
-                async function populateTerList() {
-                    terList = alasql(`SELECT * FROM Territories`);
-                }
+                    $('#mapSvg path').remove();
+                    $('#mapSvg text').remove();
 
-                async function CalcConnections() {
-                    $.each($(".blizzard:checked"), async function () {
-                        await alasql.promise(
-                            `INSERT INTO Blizzards VALUES('` + $(this).val() + `')`
-                        );
+                    $.each(alasql(`SELECT t.*, c.Color FROM Territories t LEFT JOIN Continents c ON t.Continent = c.Continent`), function () {
+                        var row = terrTbl.row
+                            .add([
+                                $(this)[0].TerritoryName,
+                                $(this)[0].Continent,
+                                `<button type="button" class="btn btn-sm btn-danger" onclick="DeleteTer(this)" data-territoryname="${$(this)[0].TerritoryName}"><i class="fa-solid fa-xmark"></i></button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="EditTer(this)" 
+                                    data-TerritoryName="${$(this)[0].TerritoryName}"
+                                    data-Continent="${$(this)[0].Continent}">
+                                    <i class="fa-solid fa-pen-to-square"></i></button>`,
+                                $(this)[0].Color,
+                            ])
+                            .draw()
+                            .node();
+
+                        $(row).css("background-color", colors[$(this)[0].Color]);
+
+
+                        var terPath = document.createElementNS(
+                            "http://www.w3.org/2000/svg",
+                            "path"
+                        ); //Create a path in SVG's namespace
+                        terPath.setAttribute("d", $(this)[0].Points);
+                        terPath.setAttribute("data-name", $(this)[0].TerritoryName);
+                        terPath.setAttribute("data-continent", $(this)[0].Continent);
+                        terPath.setAttribute("style", `stroke:${colors[$(this)[0].Color]}`);
+                        terPath.setAttribute("class", "territory");
+                        svg.appendChild(terPath);
+
                     });
 
-                    connecTbl.rows().remove().draw();
-
-                    await alasql.promise(`DELETE FROM TmpConnections`);
-                    await alasql.promise(`
-				INSERT INTO TmpConnections
-				SELECT 
-					c.Map, 
-					c.TerritoryName, 
-					c.ConenctedTerritory
-				FROM 
-					Connections c
-				LEFT JOIN Blizzards b 
-					ON c.TerritoryName = b.BlizzardTerritoryName 
-						OR c.ConenctedTerritory = b.BlizzardTerritoryName
-				
-				WHERE b.BlizzardTerritoryName IS NULL
-			`);
-
-                    $.each(
-                        alasql(`
-				SELECT 
-					t.TerritoryName,
-					c.Color,
-					b.BlizzardTerritoryName Checked,
-					COUNT(DISTINCT c1.ConenctedTerritory) Direct,
-					COUNT(c2.ConenctedTerritory) Linked
-					
-				FROM Territories t
-					INNER JOIN Continents c on t.Continent = c.Continent
-					LEFT JOIN TmpConnections c1 on t.TerritoryName = c1.TerritoryName
-					LEFT JOIN TmpConnections c2 on c1.ConenctedTerritory = c2.TerritoryName
-					LEFT JOIN Blizzards b on t.TerritoryName = b.BlizzardTerritoryName
-				
-				
-				GROUP BY
-					t.TerritoryName,
-					c.Color,
-					b.BlizzardTerritoryName
-				
-			`),
-                        function () {
-                            var color;
-                            var name;
-                            if ($(this)[0].Checked) {
-                                color = "#C2E0F9";
-                                name =
-                                    "<span>&#10052;</span> " +
-                                    $(this)[0].TerritoryName +
-                                    " <span>&#10052;</span>";
-                            } else {
-                                color = colors[$(this)[0].Color];
-                                name = $(this)[0].TerritoryName;
-                            }
-
-                            var row = connecTbl.row
-                                .add([
-                                    '<input type="checkbox"' +
-                                    ($(this)[0].Checked ? " checked " : "") +
-                                    'class="blizzard" value="' +
-                                    $(this)[0].TerritoryName +
-                                    '" />',
-                                    '<span style="color:' + color + '">' + name + "</span>",
-                                    $(this)[0].Checked
-                                        ? "<span>&#10052;</span>"
-                                        : $(this)[0].Direct,
-                                    $(this)[0].Checked
-                                        ? "<span>&#10052;</span>"
-                                        : $(this)[0].Linked,
-                                ])
-                                .draw();
-                        }
-                    );
-
-                    await alasql.promise(`DELETE FROM Blizzards`);
+                    addTerritoriesName();
                 }
+                
+                function addTerritoriesName() {
+                    var paths = $("path");
+
+                    $.each(paths, function () {
+                        addText($(this));
+                    });
+
+                }
+
+                function addText(d) {
+                    var p = d[0];
+                    //if (typeof p.getBBox == 'function') {
+                    var t = document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "text"
+                    );
+                    var b = p.getBBox();
+                    t.setAttribute(
+                        "transform",
+                        "translate(" +
+                        (b.x + b.width / 2) +
+                        " " +
+                        (b.y + b.height / 2) +
+                        ")"
+                    );
+                    t.textContent = d.attr("data-name");
+                    t.setAttribute("class", "names");
+                    p.parentNode.insertBefore(t, p.nextSibling);
+                    //}
+                }
+
+                function DeleteTer(x) {
+                    alasql.promise(`DELETE FROM Territories WHERE TerritoryName = "${x.dataset.territoryname}"`)
+                    DrawTerritories();
+                }
+
+
 
                 $("#mapSelect").change(function () {
                     map = $(this).val();
@@ -739,22 +704,14 @@
                 async function MapChange() {
                     $("#mapImg").attr("src", `./img/${map}.png`);
                     var img = document.getElementById("mapImg");
-                    window.initCanvas(img);
 
                     await LoadContinents();
                     await LoadTerritories();
-                    await Loadconnections();
-                    await populateTerList();
+
+                    window.initCanvas(img);
                 }
 
-                async function BlizzardUpdate() {
-                    await CalcConnections();
-                }
-
-                $(document).on("change", ".blizzard", function () {
-                    $(this).attr("checked", true);
-                    BlizzardUpdate();
-                });
+                               
             </script>
     </main>
 </body>
