@@ -226,50 +226,76 @@
                     <div class="col">
                         <div class="card">
                             <div class="card-body">
-                                <h5 class="card-title">Step 1 - Map Info</h5>
-                            </div>
-                            <div class="row">
-                                <div class="col">
-                                    <label>MapId</label>
-                                    <input type="text" id="miMapId" class="form-control" />
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h5 class="card-title">Step 1 - Map Info</h5>
+                                    </div>
+                                    <div class="col  align-self-end">
+                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                            <button class="btn btn-primary" type="button" id="miUpdate"
+                                                onclick="UpdateMapdata()">Update</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <label>MapName</label>
-                                    <input type="text" id="miMapId" class="form-control" />
+                                <div class="row">
+                                    <div class="col">
+                                        <label>MapId</label>
+                                        <input type="text" id="miMapId" class="form-control" disabled />
+                                    </div>
+                                    <div class="col">
+                                        <label>MapName</label>
+                                        <input type="text" id="miMapName" class="form-control" />
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col"><label>Blizzards</label>
-                                    <input type="text" id="miMapId" class="form-control" />
-                                </div>
-                                <div class="col">
-                                    <label>Portals</label>
-                                    <input type="text" id="miMapId" class="form-control" />
-                                </div>
-                                <div class="col">
-                                    <label>Territories</label>
-                                    <input type="text" id="miMapId" class="form-control" />
-                                </div>
-                                <div class="col">
-                                    <label>Continents</label>
-                                    <input type="text" id="miMapId" class="form-control" />
+                                <div class="row mt-2">
+                                    <div class="col"><label>Blizzards</label>
+                                        <input type="text" id="miBlizzards" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Portals</label>
+                                        <input type="text" id="miPortals" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Territories</label>
+                                        <input type="text" id="miTerritories" class="form-control" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Continents</label>
+                                        <input type="text" id="miContinents" class="form-control" />
+                                    </div>
                                 </div>
                             </div>
                         </div>
                         <div class="card mt-2">
                             <div class="card-body">
-                                <h5 class="card-title">Step 2 - Continents</h5>
+                                <div class="row">
+                                    <div class="col">
+                                        <h5 class="card-title">Step 2 - Continents</h5>
+                                    </div>
+                                    <div class="col">
+                                        <div class="col  align-self-end">
+                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                                <button type="button" class="btn btn-primary" onclick="NewCont()">
+                                                    New
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <table id="contTbl" class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Continent</th>
+                                                <th>Bonus</th>
+                                                <th>Territories</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody style="color: black"></tbody>
+                                    </table>
+                                </div>
+
                             </div>
-                            <table id="contTbl" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Continent</th>
-                                        <th>Bonus</th>
-                                        <th>Territories</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="color: black"></tbody>
-                            </table>
                         </div>
                     </div>
                     <div class="col">
@@ -293,12 +319,53 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="contModal" tabindex="-1" aria-labelledby="contModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="contModalLabel">Edit / Add Continents</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col">
+                                    <label>ContName</label>
+                                    <input type="text" id="ciContName" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>Bonus</label>
+                                    <input type="number" min="1" max="20" id="ciBonus" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>Territories</label>
+                                    <input type="number" min="1" max="20" id="ciTerr" class="form-control" />
+                                </div>
+                                <div class="col">
+                                    <label>Color</label>
+                                    <select class="form-select" id="contColor" onchange="UpdateColorDdl()"></select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary" onclick="ContAddUpdate()">Save
+                                changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <script src="https://unpkg.com/magic-wand-tool@latest/dist/magic-wand.min.js"></script>
             <script src="/js/mapper.js"></script>
             <script>
+
                 var mapName = "";
                 var conTble;
                 var connecTbl;
+                var maps;
+                var conts;
+                var terrs;
+                var conns;
 
                 const colors = {
                     red: "#fd7670",
@@ -317,11 +384,11 @@
                     await CreateTables();
                     initDataTables();
                     initMapDdl();
-
+                    initColorDdl();
                 }
 
                 async function initMapDdl() {
-                    var maps = await LoadMaps();
+                    maps = await LoadMaps();
 
                     $.each(maps, function () {
                         $("#mapSelect").append(
@@ -335,6 +402,28 @@
                     });
 
                     $("#mapSelect").prepend(
+                        $("<option>", {
+                            value: -1,
+                            text: "Select Map...",
+                            disabled: true,
+                            selected: true,
+                        })
+                    );
+                }
+
+                async function initColorDdl() {
+                    $.each(Object.keys(colors), function () {
+
+                        $("#contColor").append(
+                            $("<option>", {
+                                value: this,
+                                text: this,
+                                style: `background-color:${colors[this]}`
+                            })
+                        );
+                    })
+
+                    $("#contColor").prepend(
                         $("<option>", {
                             value: -1,
                             text: "Select Map...",
@@ -389,20 +478,30 @@
 
                 async function LoadContinents() {
                     await alasql.promise(`DELETE FROM Continents`);
-                    await alasql.promise(
+                    conts = await alasql.promise(
                         `SELECT * INTO Continents FROM CSV("data/` +
                         map +
                         `/continents.csv", {headers:true})`
                     );
+                    DrawContinents();
 
+                }
+
+                function DrawContinents() {
                     conTble.rows().remove().draw();
-
                     $.each(alasql(`SELECT * FROM Continents`), function () {
                         var row = conTble.row
                             .add([
                                 $(this)[0].Continent,
                                 $(this)[0].TroopBonus,
                                 $(this)[0].TerritoryCount,
+                                `<button type="button" class="btn btn-sm btn-danger" onclick="Deletecont(this)" data-contName="${$(this)[0].Continent}"><i class="fa-solid fa-xmark"></i></button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="EditCont(this)" 
+                                    data-contName="${$(this)[0].Continent}"
+                                    data-contBonus="${$(this)[0].TroopBonus}"
+                                    data-contTer="${$(this)[0].TerritoryCount}"
+                                    data-contColor="${$(this)[0].Color}">
+                                    <i class="fa-solid fa-pen-to-square"></i></button>`,
                                 $(this)[0].Color,
                             ])
                             .draw()
@@ -410,6 +509,89 @@
                         $(row).css("background-color", colors[$(this)[0].Color]);
                     });
                 }
+
+                function Deletecont(x) {
+                    alasql.promise(`DELETE FROM Continents WHERE Continent = "${x.dataset.contname}"`)
+                    DrawContinents();
+                }
+
+                function EditCont(x) {
+                    $('#ciContName').val(x.dataset.contname);
+                    $('#ciBonus').val(x.dataset.contbonus);
+                    $('#ciTerr').val(x.dataset.contter);
+
+                    $(`#contColor option:eq(${x.dataset.contter})`).prop('selected', true)
+
+                    UpdateColorDdl();
+
+                    $('#contModal').modal('show');
+                }
+
+                function NewCont(){
+                    $('#ciContName').val("");
+                    $('#ciBonus').val(1);
+                    $('#ciTerr').val(1);
+
+                    $(`#contColor option:first`).prop('selected', true);
+
+                    UpdateColorDdl();
+
+                    $('#contModal').modal('show'); 
+                }
+                
+                $('#contModal').on('shown.bs.modal', function(){
+                    $('#ciContName').focus();
+                    console.log('test')
+                });
+
+                function ContAddUpdate() {
+                    alasql.promise(`SELECT * FROM Continents WHERE Continent = "${$('#ciContName').val()}"`).then(function (res) {
+                        if (res.length > 0) {
+                            alasql.promise(`
+                                UPDATE Continents
+                                SET
+                                    TroopBonus = "${$('#ciBonus').val()}",
+                                    Color = "${$('#contColor').val()}", 
+                                    TerritoryCount = "${$('#ciTerr').val()}"
+                                WHERE 
+                                    Continent = "${$('#ciContName').val()}"`
+                            ).then(DrawContinents());
+                        } else {
+                            alasql.promise(`
+                                INSERT INTO Continents
+                                (
+                                    Map,
+                                    Continent, 
+                                    TroopBonus, 
+                                    Color, 
+                                    TerritoryCount 
+                                )
+                                VALUES (
+                                    "${map}",
+                                    "${$('#ciContName').val()}",
+                                    "${$('#ciBonus').val()}",
+                                    "${$('#contColor').val()}",
+                                    "${$('#ciTerr').val()}" 
+                                )
+                            `).then(DrawContinents());
+                        }
+
+                    });
+
+                    $('#contModal').modal('hide');
+                }
+
+                function UpdateColorDdl(){
+                    if($('#contColor').val()){
+                        $('#contColor').css("background-color",colors[($('#contColor').val())]);
+                    } else {
+                        $('#contColor').css("background-color","");
+                    }
+                    
+                }
+
+               
+
 
                 async function LoadTerritories() {
                     await alasql.promise(`DELETE FROM Territories`);
@@ -428,17 +610,6 @@
                         `/connections.csv", {headers:true})`
                     );
                     CalcConnections();
-                }
-
-                async function MapChange() {
-                    $("#mapImg").attr("src", `./img/${map}.png`);
-                    var img = document.getElementById("mapImg");
-                    window.initCanvas(img);
-
-                    await LoadContinents();
-                    await LoadTerritories();
-                    await Loadconnections();
-                    await populateTerList();
                 }
 
                 var terList;
@@ -534,8 +705,47 @@
                     map = $(this).val();
                     if (map != -1) {
                         MapChange();
+                        LoadMapdata();
                     }
                 });
+
+                function LoadMapdata() {
+                    var res = alasql(`SELECT * FROM Maps WHERE Map = "${map}"`)
+
+                    $('#miMapId').val(res[0].Map)
+                    $('#miMapName').val(res[0].Name)
+                    $('#miBlizzards').val(res[0].Blizzards)
+                    $('#miPortals').val(res[0].Portals)
+                    $('#miTerritories').val(res[0].TotalTerritories)
+                    $('#miContinents').val(res[0].TotalContinents)
+                }
+
+                function UpdateMapdata() {
+
+                    var res = alasql.promise(`
+                    UPDATE Maps
+                    SET 
+                        Name = "${$('#miMapName').val()}",
+                        Blizzards = "${$('#miBlizzards').val()}",
+                        Portals = "${$('#miPortals').val()}",
+                        TotalTerritories = "${$('#miTerritories').val()}",
+                        TotalContinents = "${$('#miContinents').val()}"
+                    WHERE Map = "${map}"
+                    `).then(LoadMapdata())
+                }
+
+                miUpdate
+
+                async function MapChange() {
+                    $("#mapImg").attr("src", `./img/${map}.png`);
+                    var img = document.getElementById("mapImg");
+                    window.initCanvas(img);
+
+                    await LoadContinents();
+                    await LoadTerritories();
+                    await Loadconnections();
+                    await populateTerList();
+                }
 
                 async function BlizzardUpdate() {
                     await CalcConnections();
