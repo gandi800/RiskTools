@@ -200,11 +200,9 @@ function trace() {
     ctx.moveTo(ps[0].x, ps[0].y);
     for (var j = 1; j < ps.length; j++) {
       ctx.lineTo(ps[j].x, ps[j].y);
-      console.log("Inner X:" + ps[j].x + " Y:" + ps[j].y);
     }
   }
-  ctx.strokeStyle = "red";
-  ctx.stroke();
+
   //outer
   ctx.beginPath();
   var d = "";
@@ -220,12 +218,9 @@ function trace() {
         d += " L ";
       }
       d += ps[j].x + " " + ps[j].y;
-      console.log("Outer X:" + ps[j].x + " Y:" + ps[j].y);
     }
-    console.log(d);
+    $('#tiPoints').val(d);
   }
-  ctx.strokeStyle = "blue";
-  ctx.stroke();
 }
 function paint(color, alpha) {
   if (!mask) return;

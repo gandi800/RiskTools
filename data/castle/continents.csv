@@ -1,7 +1,7 @@
-Map,Continent ,TroopBonus,Color,TerritoryCount
-Castle,Royal Sanctum,5,red,7
-Castle,Inner District,2,blue,3
-Castle,South Guard,2,yellow,4
-Castle,Military Division,4,green,6
-Castle,Central Plaza,3,purple,5
-Castle,Castle Exterior,3,teal,6
+Map,"Continent ",TroopBonus,Color,TerritoryCount
+Castle,Royal Sanctum,5,#fd7670,7
+Castle,Inner District,2,#6f7be6,3
+Castle,South Guard,2,#f8ebad,4
+Castle,Military Division,4,#8bec8e,6
+Castle,Central Plaza,3,#df95f3,5
+Castle,Castle Exterior,3,#3fdde9,6

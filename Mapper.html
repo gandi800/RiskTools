@@ -14,19 +14,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
         integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <script src="https://code.jquery.com/jquery-3.6.1.js"
-        integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
-        crossorigin="anonymous"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
 </head>
 
 <body>
     <style>
-        
-
         .territory {
             fill-opacity: 0;
             fill: white;
@@ -42,7 +33,7 @@
 
         svg text {
             text-anchor: middle;
-            dominant-baseline: middle;
+            /* dominant-baseline: middle; */
             fill: white;
             font-size: 20px;
             text-shadow: rgb(0, 0, 0) 2px 0px 0px,
@@ -131,36 +122,36 @@
                             </a>
                             <ul class="dropdown-menu">
                                 <li>
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item" target="_blank"
                                         href="https://risk-global-domination.fandom.com/wiki/Risk">Risk: Global
                                         Domination Wiki</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" href="https://discord.com/invite/risk"><i
+                                    <a class="dropdown-item" target="_blank" href="https://discord.com/invite/risk"><i
                                             class="fa-brands fa-discord"></i> Discord</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item" target="_blank"
                                         href="/svg-path-builder/svg-path-builder/dist/index.html">SVG Mapper</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item" target="_blank"
                                         href="https://store.steampowered.com/app/1128810/RISK_Global_Domination/"><i
                                             class="fa-brands fa-steam"></i> Steam</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item" target="_blank"
                                         href="https://play.google.com/store/apps/details?id=com.hasbro.riskbigscreen&hl=en_US&gl=US"><i
                                             class="fa-brands fa-google-play"></i> Android</a>
                                 </li>
                                 <li>
-                                    <a class="dropdown-item"
+                                    <a class="dropdown-item" target="_blank"
                                         href="https://apps.apple.com/us/app/risk-global-domination/id1051334048"><i
                                             class="fa-brands fa-app-store-ios"></i> iOS</a>
                                 </li>
@@ -191,15 +182,13 @@
                     <label>Threshold</label>
                     <input id="thresholdCalc" type="text" disabled class="form-control" />
                 </div>
-
-                <div class="col-2 pt-4">
-                    <button type="button" class="btn btn-primary" onclick="trace()">
-                        Create Territory
-                    </button>
+                <div class="col-2">
+                    <label>Continents</label>
+                    <h5 id="contDone"></h5>
                 </div>
-                <div class="col">
-                    Click and hold inside of territory while holding left mouse move mouse up/down or left/right to
-                    adjust threshold until entire territory is selected.
+                <div class="col-2">
+                    <label>Territories</label>
+                    <h5 id="terDone"></h5>
                 </div>
             </div>
         </div>
@@ -207,119 +196,75 @@
             <div class="col" id="imgCont">
                 <div class="wrapper">
                     <div class="content">
-                        <svg id="mapSvg" class="canvas" width="1400" height="726" viewBox="0 0 1400 726" style="position:absolutes;top:0;left:0;"
-                            preserveAspectRatio="xMinYMin meet"></svg>
-                        <image id="mapImg" width="1400" height="726" src=""></image>
-                        <canvas class="canvas" id="resultCanvas" width="1400" height="726"
-                            style="position:absolutes;top:0;left:0;" 
-                            onmouseup="onMouseUp.apply(this, arguments)"
+                        <svg id="mapSvg" class="canvas" width="1400" height="788" viewBox="0 0 1400 788"
+                            style="position:absolutes;top:0;left:0;" preserveAspectRatio="xMinYMin meet"></svg>
+                        <image id="mapImg" width="1400" height="788" src=""></image>
+                        <canvas class="canvas" id="resultCanvas" width="1400" height="788"
+                            style="position:absolutes;top:0;left:0;" onmouseup="onMouseUp.apply(this, arguments)"
                             onmousedown="onMouseDown.apply(this, arguments)"
                             onmousemove="onMouseMove.apply(this, arguments)"></canvas>
                     </div>
                 </div>
-                <div class="row mt-4">
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-8">
-                                        <h5 class="card-title">Step 1 - Map Info</h5>
-                                    </div>
-                                    <div class="col  align-self-end">
-                                        <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                            <button class="btn btn-primary" type="button" id="miUpdate"
-                                                onclick="UpdateMapdata()">Update</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col">
-                                        <label>MapId</label>
-                                        <input type="text" id="miMapId" class="form-control" disabled />
-                                    </div>
-                                    <div class="col">
-                                        <label>MapName</label>
-                                        <input type="text" id="miMapName" class="form-control" />
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col"><label>Blizzards</label>
-                                        <input type="text" id="miBlizzards" class="form-control" />
-                                    </div>
-                                    <div class="col">
-                                        <label>Portals</label>
-                                        <input type="text" id="miPortals" class="form-control" />
-                                    </div>
-                                    <div class="col">
-                                        <label>Territories</label>
-                                        <input type="text" id="miTerritories" class="form-control" />
-                                    </div>
-                                    <div class="col">
-                                        <label>Continents</label>
-                                        <input type="text" id="miContinents" class="form-control" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card mt-2">
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col">
-                                        <h5 class="card-title">Step 2 - Continents</h5>
-                                    </div>
-                                    <div class="col">
-                                        <div class="col  align-self-end">
-                                            <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                                <button type="button" class="btn btn-primary" onclick="NewCont()">
-                                                    New
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <table id="contTbl" class="table">
-                                        <thead>
-                                            <tr>
-                                                <th>Continent</th>
-                                                <th>Bonus</th>
-                                                <th>Territories</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody style="color: black"></tbody>
-                                    </table>
-                                </div>
+            </div>
+        </div>
 
+
+        <div class="row mt-3">
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">Step 1 - Map Info</h5>
+                            </div>
+                            <div class="col  align-self-end">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button class="btn btn-primary" type="button" id="miUpdate"
+                                        onclick="UpdateMapdata()">Save</button>
+                                </div>
+                            </div>
+                            <div class="col  align-self-end">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button type="button" class="btn btn-primary"
+                                        onclick="exportMapData()">Export</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card">
-                            <div class="card-body">
-                                <h5 class="card-title">Step 3 - Territories</h5>
+                        <div class="row">
+                            <div class="col">
+                                <label>MapId</label>
+                                <input type="text" id="miMapId" class="form-control" disabled />
                             </div>
-                            <table id="terrTbl" class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Territory</th>
-                                        <th>Continent</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody style="color: black"></tbody>
-                            </table>
-                            <tr></tr>
+                            <div class="col">
+                                <label>MapName</label>
+                                <input type="text" id="miMapName" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col"><label>Blizzards</label>
+                                <input type="text" id="miBlizzards" class="form-control" />
+                            </div>
+                            <div class="col">
+                                <label>Portals</label>
+                                <input type="text" id="miPortals" class="form-control" />
+                            </div>
+                            <div class="col">
+                                <label>Territories</label>
+                                <input type="text" id="miTerritories" class="form-control" />
+                            </div>
+                            <div class="col">
+                                <label>Continents</label>
+                                <input type="text" id="miContinents" class="form-control" />
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="modal fade" id="contModal" tabindex="-1" aria-labelledby="contModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h1 class="modal-title fs-5" id="contModalLabel">Edit / Add Continents</h1>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
+                <div class="card mt-2">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-8">
+                                <h5 class="card-title">Step 2 - Continents</h5>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <label>ContName</label>
@@ -335,215 +280,342 @@
                                 </div>
                                 <div class="col">
                                     <label>Color</label>
-                                    <select class="form-select" id="contColor" onchange="UpdateColorDdl()"></select>
+                                    <input type="text" class="form-control" id="ciColor">
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary mt-4" onclick="ContAddUpdate()">
+                                        Save
+                                    </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary" onclick="ContAddUpdate()">Save
-                                changes</button>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <table id="contTbl" class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Continent</th>
+                                        <th>Bonus</th>
+                                        <th>Territories</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="color: black"></tbody>
+                            </table>
                         </div>
+
                     </div>
                 </div>
             </div>
+            <div class="col">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <div class="row mb-3">
+                                    <div class="col">
+                                        <label>Continent</label>
+                                        <select class="form-select" id="tiCont"></select>
+                                    </div>
+                                    <div class="col">
+                                        <label>Name</label>
+                                        <input type="text" class="form-control" id="tiName" />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col">
+                                        <label>X Offset</label>
+                                        <input type="number" class="form-control" id="tiXOff" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Y Offset</label>
+                                        <input type="number" class="form-control" id="tiYOff" />
+                                    </div>
+                                    <div class="col">
+                                        <label>Points</label>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control" id="tiPoints" />
+                                            <button class="btn btn-sm btn-secondary" type="button" onclick="trace()"><i
+                                                    class="fa fa-border-none"></i></button>
+                                        </div>
 
-            <script src="https://unpkg.com/magic-wand-tool@latest/dist/magic-wand.min.js"></script>
-            <script src="/js/mapper.js"></script>
-            <script>
+                                    </div>
+                                    <div class="col">
+                                        <button type="button" class="btn btn-primary mt-4 btn-block"
+                                            onclick="TerAddUpdate()">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            <table id="terrTbl" class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Done</th>
+                                        <th>Territory</th>
+                                        <th>Continent</th>
+                                        <th>X/Y Offset</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody style="color: black"></tbody>
+                            </table>
+                            <tr></tr>
+                        </div>
+                    </div>
+                </div>
 
-                var mapName = "";
-                var conTble;
-                var connecTbl;
-                var terrTbl;
-                var maps;
-                var conts;
-                var terrs;
-                var conns;
+            </div>
+        </div>
+        </div>
+        <div class="modal fade" id="contModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="contModalLabel">Edit / Add Continents</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5>Map Info</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea rows="5" class="form-control" id="mapExport"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <h5>Continent Info</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea rows="5" class="form-control" id="contExport"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <h5>Territory Info</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea rows="5" class="form-control" id="terrExport"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
+        <script src="https://unpkg.com/magic-wand-tool@latest/dist/magic-wand.min.js"></script>
+        <script src="/js/mapper.js"></script>
+        <script>
 
-                const colors = {
-                    red: "#fd7670",
-                    blue: "#6f7be6",
-                    green: "#8bec8e",
-                    yellow: "#f8ebad",
-                    teal: "#3fdde9",
-                    purple: "#df95f3",
-                };
+            var mapName = "";
+            var mapCont;
+            var mapTer;
 
-                $(document).ready(function () {
-                    main();
+            var doneCont;
+            var doneTer;
+
+            var conTble;
+            var connecTbl;
+            var terrTbl;
+            var maps;
+            var conts;
+            var terrs;
+            var conns;
+
+            $(document).ready(function () {
+                main();
+            });
+
+            async function main() {
+                await CreateTables();
+                initDataTables();
+                initMapDdl();
+            }
+
+            async function initMapDdl() {
+                maps = await LoadMaps();
+
+                $.each(maps, function () {
+                    $("#mapSelect").append(
+                        $("<option>", {
+                            value: $(this)[0].Map,
+                            text:
+                                ($(this)[0].Done == 0 ? "To Do - " : "") + $(this)[0].Name,
+                            disabled: $(this)[0].Done == 0,
+                        })
+                    );
                 });
 
-                async function main() {
-                    await CreateTables();
-                    initDataTables();
-                    initMapDdl();
-                    initColorDdl();
-                }
-
-                async function initMapDdl() {
-                    maps = await LoadMaps();
-
-                    $.each(maps, function () {
-                        $("#mapSelect").append(
-                            $("<option>", {
-                                value: $(this)[0].Map,
-                                text:
-                                    ($(this)[0].Done == 0 ? "To Do - " : "") + $(this)[0].Name,
-                                disabled: $(this)[0].Done == 0,
-                            })
-                        );
-                    });
-
-                    $("#mapSelect").prepend(
-                        $("<option>", {
-                            value: -1,
-                            text: "Select Map...",
-                            disabled: true,
-                            selected: true,
-                        })
-                    );
-                }
-
-                async function initColorDdl() {
-                    $.each(Object.keys(colors), function () {
-
-                        $("#contColor").append(
-                            $("<option>", {
-                                value: this,
-                                text: this,
-                                style: `background-color:${colors[this]}`
-                            })
-                        );
+                $("#mapSelect").prepend(
+                    $("<option>", {
+                        value: -1,
+                        text: "Select Map...",
+                        disabled: true,
+                        selected: true,
                     })
+                );
+            }
 
-                    $("#contColor").prepend(
-                        $("<option>", {
-                            value: -1,
-                            text: "Select Map...",
-                            disabled: true,
-                            selected: true,
-                        })
-                    );
-                }
+            function initDataTables() {
+                conTble = $("#contTbl").DataTable({
+                    paging: false,
+                    ordering: true,
+                    info: false,
+                    searching: false,
+                });
 
-                function initDataTables() {
-                    conTble = $("#contTbl").DataTable({
-                        paging: false,
-                        ordering: true,
-                        info: false,
-                        searching: false,
-                    });
+                terrTbl = $("#terrTbl").DataTable({
+                    paging: false,
+                    info: false,
+                    scrollY: "150px",
+                    searching: false
+                });
+            }
 
-                    terrTbl = $("#terrTbl").DataTable({
-                        paging: false,
-                        info: false,
-                        scrollY: "400px",
-                    });
-                }
+            async function CreateTables() {
+                alasql(
+                    "CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number, Done number)"
+                );
+                alasql(
+                    "CREATE TABLE Continents (Map string ,Continent string, TroopBonus number, Color string, TerritoryCount number)"
+                );
+                alasql(
+                    "CREATE TABLE Territories (Map string, TerritoryName string, Continent string, NameXOffset number, NameYOffset number,Points string)"
+                );
+            }
 
-                async function CreateTables() {
-                    alasql(
-                        "CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number, Done number)"
-                    );
-                    alasql(
-                        "CREATE TABLE Continents (Map string ,Continent string, TroopBonus number, Color string, TerritoryCount number)"
-                    );
-                    alasql(
-                        "CREATE TABLE Territories (Map string, TerritoryName string, Continent string, Points string)"
-                    );
-                }
+            async function LoadMaps() {
+                await alasql.promise(
+                    `SELECT * INTO Maps FROM CSV("data/maps.csv", {headers:true})`
+                );
+                return await alasql(
+                    `SELECT * FROM Maps ORDER BY Done DESC, Name ASC`
+                );
+            }
 
-                async function LoadMaps() {
-                    await alasql.promise(
-                        `SELECT * INTO Maps FROM CSV("data/maps.csv", {headers:true})`
-                    );
-                    return await alasql(
-                        `SELECT * FROM Maps ORDER BY Done DESC, Name ASC`
-                    );
-                }
+            async function LoadContinents() {
+                await alasql.promise(`DELETE FROM Continents`);
+                conts = await alasql.promise(
+                    `SELECT * INTO Continents FROM CSV("data/` +
+                    map +
+                    `/continents.csv", {headers:true}) ORDER BY Continent`
+                );
+                DrawContinents();
 
-                async function LoadContinents() {
-                    await alasql.promise(`DELETE FROM Continents`);
-                    conts = await alasql.promise(
-                        `SELECT * INTO Continents FROM CSV("data/` +
-                        map +
-                        `/continents.csv", {headers:true})`
-                    );
-                    DrawContinents();
+            }
 
-                }
+            function DrawContinents() {
+                conTble.rows().remove().draw();
+                conts = alasql(`SELECT * FROM Continents ORDER BY Continent`);
 
-                function DrawContinents() {
-                    conTble.rows().remove().draw();
-                    $.each(alasql(`SELECT * FROM Continents`), function () {
-                        var row = conTble.row
-                            .add([
-                                $(this)[0].Continent,
-                                $(this)[0].TroopBonus,
-                                $(this)[0].TerritoryCount,
-                                `<button type="button" class="btn btn-sm btn-danger" onclick="Deletecont(this)" data-contName="${$(this)[0].Continent}"><i class="fa-solid fa-xmark"></i></button>
+                $.each(conts, function () {
+                    var row = conTble.row
+                        .add([
+                            $(this)[0].Continent,
+                            $(this)[0].TroopBonus,
+                            $(this)[0].TerritoryCount,
+                            `<button type="button" class="btn btn-sm btn-danger" onclick="Deletecont(this)" data-contName="${$(this)[0].Continent}"><i class="fa-solid fa-xmark"></i></button>
                                 <button type="button" class="btn btn-sm btn-primary" onclick="EditCont(this)" 
                                     data-contName="${$(this)[0].Continent}"
                                     data-contBonus="${$(this)[0].TroopBonus}"
                                     data-contTer="${$(this)[0].TerritoryCount}"
                                     data-contColor="${$(this)[0].Color}">
                                     <i class="fa-solid fa-pen-to-square"></i></button>`,
-                                $(this)[0].Color,
-                            ])
-                            .draw()
-                            .node();
-                        $(row).css("background-color", colors[$(this)[0].Color]);
-                    });
-                }
+                            $(this)[0].Color,
+                        ])
+                        .draw()
+                        .node();
+                    $(row).css("background-color", $(this)[0].Color);
+                });
+                UpdateContDdl();
 
-                function Deletecont(x) {
-                    alasql.promise(`DELETE FROM Continents WHERE Continent = "${x.dataset.contname}"`)
-                    DrawContinents();
-                }
+                doneCont = conts.length
+                $('#contDone').text(doneCont + "/" + mapCont)
+            }
 
-                function EditCont(x) {
-                    $('#ciContName').val(x.dataset.contname);
-                    $('#ciBonus').val(x.dataset.contbonus);
-                    $('#ciTerr').val(x.dataset.contter);
-
-                    $(`#contColor option:eq(${x.dataset.contter})`).prop('selected', true)
-
-                    UpdateColorDdl();
-
-                    $('#contModal').modal('show');
-                }
-
-                function NewCont() {
-                    $('#ciContName').val("");
-                    $('#ciBonus').val(1);
-                    $('#ciTerr').val(1);
-
-                    $(`#contColor option:first`).prop('selected', true);
-
-                    UpdateColorDdl();
-
-                    $('#contModal').modal('show');
-                }
-
-                $('#contModal').on('shown.bs.modal', function () {
-                    $('#ciContName').focus();
+            function UpdateContDdl() {
+                $("#tiCont option").remove();
+                $.each(conts, function () {
+                    $("#tiCont").append(
+                        $("<option>", {
+                            value: $(this)[0].Continent,
+                            text: $(this)[0].Continent
+                        })
+                    );
                 });
 
-                function ContAddUpdate() {
-                    alasql.promise(`SELECT * FROM Continents WHERE Continent = "${$('#ciContName').val()}"`).then(function (res) {
-                        if (res.length > 0) {
-                            alasql.promise(`
+                $("#tiCont").prepend(
+                    $("<option>", {
+                        value: -1,
+                        text: "Select Map...",
+                        disabled: true,
+                        selected: true,
+                    })
+                );
+            }
+
+            function Deletecont(x) {
+                alasql.promise(`DELETE FROM Continents WHERE Continent = "${x.dataset.contname}"`)
+                DrawContinents();
+            }
+
+            function EditCont(x) {
+                $('#ciContName').val(x.dataset.contname);
+                $('#ciBonus').val(x.dataset.contbonus);
+                $('#ciTerr').val(x.dataset.contter);
+                $('#ciColor').val(x.dataset.contcolor);
+
+
+                $('#contModal').modal('show');
+            }
+
+            function NewCont() {
+                $('#ciContName').val("");
+                $('#ciBonus').val(1);
+                $('#ciTerr').val(1);
+                $('#ciColor').val("#");
+
+                $('#contModal').modal('show');
+            }
+
+            $('#contModal').on('shown.bs.modal', function () {
+                $('#ciContName').focus();
+            });
+
+            function ContAddUpdate() {
+                alasql.promise(`SELECT * FROM Continents WHERE Continent = "${$('#ciContName').val()}"`).then(function (res) {
+                    if (res.length > 0) {
+                        alasql.promise(`
                                 UPDATE Continents
                                 SET
                                     TroopBonus = "${$('#ciBonus').val()}",
-                                    Color = "${$('#contColor').val()}", 
+                                    Color = "${$('#ciColor').val()}", 
                                     TerritoryCount = "${$('#ciTerr').val()}"
                                 WHERE 
                                     Continent = "${$('#ciContName').val()}"`
-                            ).then(DrawContinents());
-                        } else {
-                            alasql.promise(`
+                        ).then(DrawContinents());
+                    } else {
+                        alasql.promise(`
                                 INSERT INTO Continents
                                 (
                                     Map,
@@ -556,138 +628,209 @@
                                     "${map}",
                                     "${$('#ciContName').val()}",
                                     "${$('#ciBonus').val()}",
-                                    "${$('#contColor').val()}",
+                                    "${$('#ciColor').val()}",
                                     "${$('#ciTerr').val()}" 
                                 )
                             `).then(DrawContinents());
-                        }
-
-                    });
-
-                    $('#contModal').modal('hide');
-                }
-
-                function UpdateColorDdl() {
-                    if ($('#contColor').val()) {
-                        $('#contColor').css("background-color", colors[($('#contColor').val())]);
-                    } else {
-                        $('#contColor').css("background-color", "");
                     }
 
-                }
-
-                async function LoadTerritories() {
-                    await alasql.promise(`DELETE FROM Territories`);
-                    await alasql.promise(
-                        `SELECT * INTO Territories FROM CSV("data/` +
-                        map +
-                        `/territories.csv", {headers:true})`
-                    );
-                    DrawTerritories();
-                }
-
-
-                function DrawTerritories() {
-                    terrTbl.rows().remove().draw();
-                    var svg = document.getElementById("mapSvg");
-
-                    $('#mapSvg path').remove();
-                    $('#mapSvg text').remove();
-
-                    $.each(alasql(`SELECT t.*, c.Color FROM Territories t LEFT JOIN Continents c ON t.Continent = c.Continent`), function () {
-                        var row = terrTbl.row
-                            .add([
-                                $(this)[0].TerritoryName,
-                                $(this)[0].Continent,
-                                `<button type="button" class="btn btn-sm btn-danger" onclick="DeleteTer(this)" data-territoryname="${$(this)[0].TerritoryName}"><i class="fa-solid fa-xmark"></i></button>
-                                <button type="button" class="btn btn-sm btn-primary" onclick="EditTer(this)" 
-                                    data-TerritoryName="${$(this)[0].TerritoryName}"
-                                    data-Continent="${$(this)[0].Continent}">
-                                    <i class="fa-solid fa-pen-to-square"></i></button>`,
-                                $(this)[0].Color,
-                            ])
-                            .draw()
-                            .node();
-
-                        $(row).css("background-color", colors[$(this)[0].Color]);
-
-
-                        var terPath = document.createElementNS(
-                            "http://www.w3.org/2000/svg",
-                            "path"
-                        ); //Create a path in SVG's namespace
-                        terPath.setAttribute("d", $(this)[0].Points);
-                        terPath.setAttribute("data-name", $(this)[0].TerritoryName);
-                        terPath.setAttribute("data-continent", $(this)[0].Continent);
-                        terPath.setAttribute("style", `stroke:${colors[$(this)[0].Color]}`);
-                        terPath.setAttribute("class", "territory");
-                        svg.appendChild(terPath);
-
-                    });
-
-                    addTerritoriesName();
-                }
-                
-                function addTerritoriesName() {
-                    var paths = $("path");
-
-                    $.each(paths, function () {
-                        addText($(this));
-                    });
-
-                }
-
-                function addText(d) {
-                    var p = d[0];
-                    //if (typeof p.getBBox == 'function') {
-                    var t = document.createElementNS(
-                        "http://www.w3.org/2000/svg",
-                        "text"
-                    );
-                    var b = p.getBBox();
-                    t.setAttribute(
-                        "transform",
-                        "translate(" +
-                        (b.x + b.width / 2) +
-                        " " +
-                        (b.y + b.height / 2) +
-                        ")"
-                    );
-                    t.textContent = d.attr("data-name");
-                    t.setAttribute("class", "names");
-                    p.parentNode.insertBefore(t, p.nextSibling);
-                    //}
-                }
-
-                function DeleteTer(x) {
-                    alasql.promise(`DELETE FROM Territories WHERE TerritoryName = "${x.dataset.territoryname}"`)
-                    DrawTerritories();
-                }
-
-
-
-                $("#mapSelect").change(function () {
-                    map = $(this).val();
-                    if (map != -1) {
-                        MapChange();
-                        LoadMapdata();
-                    }
                 });
 
-                function LoadMapdata() {
-                    var res = alasql(`SELECT * FROM Maps WHERE Map = "${map}"`)
+                $('#contModal').modal('hide');
+            }
 
-                    $('#miMapId').val(res[0].Map)
-                    $('#miMapName').val(res[0].Name)
-                    $('#miBlizzards').val(res[0].Blizzards)
-                    $('#miPortals').val(res[0].Portals)
-                    $('#miTerritories').val(res[0].TotalTerritories)
-                    $('#miContinents').val(res[0].TotalContinents)
+            async function LoadTerritories() {
+                await alasql.promise(`DELETE FROM Territories`);
+                await alasql.promise(
+                    `SELECT * INTO Territories FROM CSV("data/` +
+                    map +
+                    `/territories.csv", {headers:true}) ORDER BY Continent, TerritoryName`
+                );
+                DrawTerritories();
+            }
+
+            function DeleteTer(x) {
+                alasql.promise(`DELETE FROM Territories WHERE TerritoryName = "${x.dataset.territoryname}"`);
+                DrawTerritories();
+            }
+
+            function EditTer(x) {
+                $('#tiName').val(x.dataset.territoryname);
+                $('#tiPoints').val(x.dataset.points);
+                $('#tiXOff').val(x.dataset.xoff);
+                $('#tiYOff').val(x.dataset.yoff);
+                $(`#tiCont`).val(x.dataset.continent);
+            }
+
+            function TerAddUpdate() {
+                trace();
+                alasql.promise(`SELECT * FROM Territories WHERE TerritoryName = "${$('#tiName').val()}"`).then(function (res) {
+                    if (res.length > 0) {
+                        alasql.promise(`
+                                UPDATE Territories
+                                SET
+                                    Continent = "${$('#tiCont').val()}", 
+                                    TerritoryName = "${$('#tiName').val()}",
+                                    NameXOffset = "${$('#tiXOff').val()}",
+                                    NameYOffset = "${$('#tiYOff').val()}",
+                                    Points = "${$('#tiPoints').val()}"
+                                WHERE 
+                                    TerritoryName = "${$('#tiName').val()}"`
+                        ).then(ClearTer());
+                    } else {
+                        alasql.promise(`
+                                INSERT INTO Territories
+                                (
+                                    Map,
+                                    Continent, 
+                                    TerritoryName, 
+                                    NameXOffset,
+                                    NameYOffset,
+                                    Points
+                                )
+                                VALUES (
+                                    "${map}",
+                                    "${$('#tiCont').val()}",
+                                    "${$('#tiName').val()}",
+                                    "${$('#tiXOff').val()}",
+                                    "${$('#tiYOff').val()}",
+                                    "${$('#tiPoints').val()}"
+                                )
+                            `).then(ClearTer());
+                    }
+
+                });
+            }
+
+            function ClearTer() {
+                $('#tiName').val("");
+                $('#tiPoints').val("");
+                $('#tiXOff').val(0);
+                $('#tiYOff').val(0);
+                DrawTerritories();
+            }
+
+            function DrawTerritories() {
+                terrTbl.rows().remove().draw();
+                var svg = document.getElementById("mapSvg");
+
+                $('#mapSvg path').remove();
+                $('#mapSvg text').remove();
+                doneTer = 0
+                terrs = alasql(`SELECT t.*, c.Color FROM Territories t LEFT JOIN Continents c ON t.Continent = c.Continent ORDER BY t.Continent, t.TerritoryName`)
+                $.each(terrs, function () {
+
+                    if ($(this)[0].Points) { doneTer += 1 }
+
+                    var row = terrTbl.row
+                        .add([
+                            ($(this)[0].Points ? `<i class="fa-solid fa-check"></i>` : ""),
+                            $(this)[0].TerritoryName,
+                            $(this)[0].Continent,
+                            "X:" + $(this)[0].NameXOffset + " Y:" + $(this)[0].NameYOffset,
+                            `<button type="button" class="btn btn-sm btn-danger" onclick="DeleteTer(this)" data-territoryname="${$(this)[0].TerritoryName}"><i class="fa-solid fa-xmark"></i></button>
+                                <button type="button" class="btn btn-sm btn-primary" onclick="EditTer(this)" 
+                                    data-TerritoryName="${$(this)[0].TerritoryName}"
+                                    data-Continent="${$(this)[0].Continent}"
+                                    data-xoff="${$(this)[0].NameXOffset}"
+                                    data-yoff="${$(this)[0].NameYOffset}"
+                                    data-points="${$(this)[0].Points}"
+                                    >
+                                    <i class="fa-solid fa-pen-to-square"></i></button>`,
+                            $(this)[0].Color,
+                        ])
+                        .draw()
+                        .node();
+
+                    $(row).css("background-color", $(this)[0].Color);
+
+
+                    var terPath = document.createElementNS(
+                        "http://www.w3.org/2000/svg",
+                        "path"
+                    ); //Create a path in SVG's namespace
+                    terPath.setAttribute("d", $(this)[0].Points);
+                    terPath.setAttribute("data-name", $(this)[0].TerritoryName);
+                    terPath.setAttribute("data-xoff", $(this)[0].NameXOffset);
+                    terPath.setAttribute("data-yoff", $(this)[0].NameYOffset);
+                    terPath.setAttribute("data-continent", $(this)[0].Continent);
+                    terPath.setAttribute("style", `stroke:${$(this)[0].Color}`);
+                    terPath.setAttribute("class", "territory");
+                    svg.appendChild(terPath);
+
+                });
+
+                addTerritoriesName();
+
+                $('#terDone').text(doneTer + "/" + mapTer)
+            }
+
+            function addTerritoriesName() {
+                var paths = $("path");
+
+                $.each(paths, function () {
+                    addText($(this));
+                });
+
+            }
+
+            function addText(d) {
+                var p = d[0];
+                //if (typeof p.getBBox == 'function') {
+                var t = document.createElementNS(
+                    "http://www.w3.org/2000/svg",
+                    "text"
+                );
+                var b = p.getBBox();
+
+                console.log(d.attr("data-xoff") + "/" + d.attr("data-yoff"))
+                var x = d.attr("data-xoff") * 1;
+                var y = d.attr("data-yoff") * 1;
+                t.setAttribute(
+                    "transform",
+                    "translate(" +
+                    ((b.x + b.width / 2) + x) +
+                    " " +
+                    ((b.y + b.height / 2) + y) +
+                    ")"
+                );
+                t.textContent = d.attr("data-name");
+                t.setAttribute("class", "names");
+                p.parentNode.insertBefore(t, p.nextSibling);
+            }
+
+            function DeleteTer(x) {
+                alasql.promise(`DELETE FROM Territories WHERE TerritoryName = "${x.dataset.territoryname}"`)
+                DrawTerritories();
+            }
+
+
+
+            $("#mapSelect").change(function () {
+                map = $(this).val();
+                if (map != -1) {
+                    MapChange();
+                    LoadMapdata();
                 }
+            });
 
-                function UpdateMapdata() {
+            function LoadMapdata() {
+                var res = alasql(`SELECT * FROM Maps WHERE Map = "${map}"`)
 
-                    var res = alasql.promise(`
+                $('#miMapId').val(res[0].Map)
+                $('#miMapName').val(res[0].Name)
+                $('#miBlizzards').val(res[0].Blizzards)
+                $('#miPortals').val(res[0].Portals)
+                $('#miTerritories').val(res[0].TotalTerritories)
+                $('#miContinents').val(res[0].TotalContinents)
+
+                mapCont = res[0].TotalContinents;
+                mapTer = res[0].TotalTerritories;
+            }
+
+            function UpdateMapdata() {
+
+                var res = alasql.promise(`
                     UPDATE Maps
                     SET 
                         Name = "${$('#miMapName').val()}",
@@ -697,22 +840,60 @@
                         TotalContinents = "${$('#miContinents').val()}"
                     WHERE Map = "${map}"
                     `).then(LoadMapdata())
-                }
+            }
 
-                miUpdate
+            miUpdate
 
-                async function MapChange() {
-                    $("#mapImg").attr("src", `./img/${map}.png`);
-                    var img = document.getElementById("mapImg");
+            async function MapChange() {
+                $("#mapImg").attr("src", `./img/${map}.png`);
+                var img = document.getElementById("mapImg");
 
-                    await LoadContinents();
-                    await LoadTerritories();
+                await LoadContinents();
+                await LoadTerritories();
 
-                    window.initCanvas(img);
-                }
+                window.initCanvas(img);
+            }
 
-                               
-            </script>
+            function exportMapData() {
+                var contData = "Map,Continent,TroopBonus,Color,TerritoryCount\n";
+                var terData = "Map,TerritoryName,Continent,NameXOffset,NameYOffset,Points\n";
+                $.each(alasql(`SELECT * FROM Maps WHERE Map ="${map}"`), function () {
+                    $('#mapExport').text(
+                        map + "," +
+                        $(this)[0].Name + "," +
+                        $(this)[0].Blizzards + "," +
+                        $(this)[0].Portals + "," +
+                        $(this)[0].TotalTerritories + "," +
+                        $(this)[0].TotalContinents
+                    )
+                })
+                $.each(alasql(`SELECT * FROM Continents`), function () {
+                    contData +=
+                        map + "," +
+                        $(this)[0].Continent + "," +
+                        $(this)[0].TroopBonus + "," +
+                        $(this)[0].Color + "," +
+                        $(this)[0].TerritoryCount + "\n"
+                })
+
+                $('#contExport').text(contData);
+
+                $.each(alasql(`SELECT * FROM Territories`), function () {
+                    terData +=
+                        map + "," +
+                        $(this)[0].TerritoryName + "," +
+                        $(this)[0].Continent + "," +
+                        $(this)[0].NameXOffset + "," +
+                        $(this)[0].NameYOffset + "," +
+                        $(this)[0].Points + "\n"
+                })
+
+                $('#terrExport').text(terData);
+                $('#contModal').modal('show');
+            }
+
+
+        </script>
     </main>
 </body>
 
