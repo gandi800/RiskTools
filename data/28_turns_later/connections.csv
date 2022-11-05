@@ -1,0 +1,97 @@
+Map,TerritoryName,ConenctedTerritory
+Castle,Keep,North Wing
+Castle,North Wing,Royal Quarters
+Castle,North Wing,Grand Hall
+Castle,North Wing,Archery Range
+Castle,North Wing,Keep
+Castle,Royal Quarters,North Wing
+Castle,Royal Quarters,Grand Hall
+Castle,Grand Hall,The Throne
+Castle,Grand Hall,Kitchen
+Castle,Grand Hall,Dining Hall
+Castle,Grand Hall,Steps
+Castle,Grand Hall,North Wing
+Castle,Grand Hall,Royal Quarters
+Castle,Kitchen,Dining Hall
+Castle,Kitchen,Grand Hall
+Castle,Kitchen,South Wing
+Castle,The Throne,Grand Hall
+Castle,Dining Hall,Grand Hall
+Castle,Dining Hall,Kitchen
+Castle,Dining Hall,South Wing
+Castle,Bastion,South Wing
+Castle,South Wing,Bastion
+Castle,South Wing,Kitchen
+Castle,South Wing,Dining Hall
+Castle,South Wing,Inner Garden
+Castle,South Wing,Postern
+Castle,South Wing,Southern Ramparts
+Castle,Postern,South Wing
+Castle,Postern,South Bank
+Castle,Southern Ramparts,South Wing
+Castle,Southern Ramparts,Battlements
+Castle,Archery Range,North Wing
+Castle,Archery Range,Armory
+Castle,Archery Range,Courtyard
+Castle,Armory,Archery Range
+Castle,Armory,Dormitory
+Castle,Armory,Barracks
+Castle,Dormitory,Barracks
+Castle,Dormitory,Armory
+Castle,Barracks,Armory
+Castle,Barracks,Main Bailey
+Castle,Barracks,Marketplace
+Castle,Barracks,Eastern Ramparts
+Castle,Eastern Ramparts,Barracks
+Castle,Eastern Ramparts,Battlements
+Castle,Eastern Ramparts,Siege Tower
+Castle,Battlements,Eastern Ramparts
+Castle,Battlements,Southern Ramparts
+Castle,Steps,Courtyard
+Castle,Steps,Inner Garden
+Castle,Steps,Grand Hall
+Castle,Courtyard,Archery Range
+Castle,Courtyard,Steps
+Castle,Courtyard,Inner Garden
+Castle,Courtyard,Main Bailey
+Castle,Inner Garden,South Wing
+Castle,Inner Garden,Courtyard
+Castle,Inner Garden,Steps
+Castle,Main Bailey,Courtyard
+Castle,Main Bailey,Barracks
+Castle,Main Bailey,Marketplace
+Castle,Main Bailey,Blacksmith
+Castle,Main Bailey,Stable
+Castle,Main Bailey,Gate
+Castle,Marketplace,Main Bailey
+Castle,Marketplace,Barracks
+Castle,Marketplace,Gate
+Castle,Blacksmith,Main Bailey
+Castle,Blacksmith,Stable
+Castle,Stable,Blacksmith
+Castle,Stable,Main Bailey
+Castle,Stable,Gate
+Castle,Draw Bridge,Gate
+Castle,Draw Bridge,North Bank
+Castle,Draw Bridge,Seige Encampment
+Castle,Draw Bridge,Seige Headquarters
+Castle,Draw Bridge,South Bank
+Castle,North Bank,Siege Tower
+Castle,North Bank,Draw Bridge
+Castle,North Bank,Seige Encampment
+Castle,Seige Encampment,Seige Headquarters
+Castle,Seige Encampment,South Bank
+Castle,Seige Encampment,Draw Bridge
+Castle,Seige Encampment,North Bank
+Castle,Seige Headquarters,South Bank
+Castle,Seige Headquarters,Seige Encampment
+Castle,South Bank,Postern
+Castle,South Bank,Seige Encampment
+Castle,South Bank,Seige Headquarters
+Castle,South Bank,Draw Bridge
+Castle,Siege Tower,North Bank
+Castle,Siege Tower,Eastern Ramparts
+Castle,Gate,Draw Bridge
+Castle,Gate,Main Bailey
+Castle,Gate,Main Bailey
+Castle,Gate,Stable
