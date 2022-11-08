@@ -196,10 +196,10 @@
             <div class="col" id="imgCont">
                 <div class="wrapper">
                     <div class="content">
-                        <svg id="mapSvg" class="canvas" width="1400" height="788" viewBox="0 0 1400 788"
+                        <svg id="mapSvg" class="canvas" width="1366" height="734" viewBox="0 0 1366 734"
                             style="position:absolutes;top:0;left:0;" preserveAspectRatio="xMinYMin meet"></svg>
-                        <image id="mapImg" width="1400" height="788" src=""></image>
-                        <canvas class="canvas" id="resultCanvas" width="1400" height="788"
+                        <image id="mapImg" width="1366" height="734" src=""></image>
+                        <canvas class="canvas" id="resultCanvas" width="1366" height="734"
                             style="position:absolutes;top:0;left:0;" onmouseup="onMouseUp.apply(this, arguments)"
                             onmousedown="onMouseDown.apply(this, arguments)"
                             onmousemove="onMouseMove.apply(this, arguments)"></canvas>
@@ -844,7 +844,7 @@
             miUpdate
 
             async function MapChange() {
-                $("#mapImg").attr("src", `./img/${map}.jpg`);
+                $("#mapImg").attr("src", `./img/${map}.png`);
                 var img = document.getElementById("mapImg");
 
                 await LoadContinents();

@@ -4,7 +4,6 @@ africa,Africa,3,2,37,7,1
 africa_advanced,Africa Advanced,3,2,50,9,1
 alcatraz,Alcatraz,3,2,39,5,1
 arctic,Arctic,3,2,47,6,1
-arkeanos,Arkeanos,3,2,69,10,1
 asia_1800s,Asia 1800s,3,2,48,9,1
 atlantis,Atlantis,3,2,57,9,1
 blackbeards_wrath,Blackbeard's Wrath,3,2,44,6,1
@@ -46,15 +45,13 @@ koenigsberg,Koenigsberg,3,2,43,10,1
 las_vegas_nevada,Las Vegas Nevada,3,2,58,10,1
 los_angeles,Los Angeles,3,2,41,7,1
 lost_temple,Lost Temple,3,2,45,7,1
-lübeck,Lübeck,3,2,43,9,1
+lubeck,Lubeck,3,2,43,9,1
 lunar_mining_facility,Lunar Mining Facility,3,2,62,10,1
 machu_picchu,Machu Picchu,3,2,38,8,1
 mall_of_the_dead,Mall of the Dead,3,2,72,8,1
 modern_spain,Modern Spain,3,2,47,12,1
 mont_saint_michel,Mont Saint Michel,3,2,88,14,1
 moonstone_forest,Moonstone Forest,3,2,47,9,1
-moscow,Moscow,3,2,33,10,1
-moscow_advanced,Moscow Advanced,3,2,69,10,1
 nan_madol,Nan Madol,3,2,42,7,1
 new_york,New York,3,2,34,5,1
 new_zealand_and_australia,New Zealand and Australia,3,2,38,8,1
@@ -69,8 +66,6 @@ reverse_world,Reverse World,3,2,66,10,1
 river_town,River Town,3,2,24,7,1
 river_town_advanced,River Town [Advanced],3,2,68,12,1
 roman_empire,Roman Empire,3,2,43,7,1
-russia_2010,Russia 2010,3,2,51,7,1
-russia_2010_advanced,Russia 2010 Advanced,3,2,61,7,1
 seagrogs_fortress,Seagrogs Fortress,3,2,76,7,1
 seaport,Seaport,3,2,41,8,1
 simple_world,Simple World,3,2,19,6,1

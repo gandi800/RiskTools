@@ -219,21 +219,16 @@
             var shouldIgnore = !e.shiftKey;
             return shouldIgnore;
           },
+          beforeWheel: function(e) {
+            var shouldIgnore = !e.shiftKey;
+            return shouldIgnore;
+          }
         });
       });
 
       var mapName = "";
       var conTble;
       var connecTbl;
-
-      const colors = {
-        red: "#fd7670",
-        blue: "#6f7be6",
-        green: "#8bec8e",
-        yellow: "#f8ebad",
-        teal: "#3fdde9",
-        purple: "#df95f3",
-      };
 
       $(document).ready(function () {
         main();
@@ -326,7 +321,7 @@
             ])
             .draw()
             .node();
-          $(row).css("background-color", colors[$(this)[0].Color]);
+          $(row).css("background-color", $(this)[0].Color);
         });
       }
 
@@ -471,7 +466,7 @@
                 $(this)[0].TerritoryName +
                 " <span>&#10052;</span>";
             } else {
-              color = colors[$(this)[0].Color];
+              color = $(this)[0].Color;
               name = $(this)[0].TerritoryName;
             }
 
