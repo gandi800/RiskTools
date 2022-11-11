@@ -1,97 +1,97 @@
-Id,Map,TerritoryName,ConenctedTerritory
-1,Castle,Keep,North Wing
-2,Castle,North Wing,Royal Quarters
-3,Castle,North Wing,Grand Hall
-4,Castle,North Wing,Archery Range
-5,Castle,North Wing,Keep
-6,Castle,Royal Quarters,North Wing
-7,Castle,Royal Quarters,Grand Hall
-8,Castle,Grand Hall,The Throne
-9,Castle,Grand Hall,Kitchen
-10,Castle,Grand Hall,Dining Hall
-11,Castle,Grand Hall,Steps
-12,Castle,Grand Hall,North Wing
-13,Castle,Grand Hall,Royal Quarters
-14,Castle,Kitchen,Dining Hall
-15,Castle,Kitchen,Grand Hall
-16,Castle,Kitchen,South Wing
-17,Castle,The Throne,Grand Hall
-18,Castle,Dining Hall,Grand Hall
-19,Castle,Dining Hall,Kitchen
-20,Castle,Dining Hall,South Wing
-21,Castle,Bastion,South Wing
-22,Castle,South Wing,Bastion
-23,Castle,South Wing,Kitchen
-24,Castle,South Wing,Dining Hall
-25,Castle,South Wing,Inner Garden
-26,Castle,South Wing,Postern
-27,Castle,South Wing,Southern Ramparts
-28,Castle,Postern,South Wing
-29,Castle,Postern,South Bank
-30,Castle,Southern Ramparts,South Wing
-31,Castle,Southern Ramparts,Battlements
-32,Castle,Archery Range,North Wing
-33,Castle,Archery Range,Armory
-34,Castle,Archery Range,Courtyard
-35,Castle,Armory,Archery Range
-36,Castle,Armory,Dormitory
-37,Castle,Armory,Barracks
-38,Castle,Dormitory,Barracks
-39,Castle,Dormitory,Armory
-40,Castle,Barracks,Armory
-41,Castle,Barracks,Main Bailey
-42,Castle,Barracks,Marketplace
-43,Castle,Barracks,Eastern Ramparts
-44,Castle,Eastern Ramparts,Barracks
-45,Castle,Eastern Ramparts,Battlements
-46,Castle,Eastern Ramparts,Siege Tower
-47,Castle,Battlements,Eastern Ramparts
-48,Castle,Battlements,Southern Ramparts
-49,Castle,Steps,Courtyard
-50,Castle,Steps,Inner Garden
-51,Castle,Steps,Grand Hall
-52,Castle,Courtyard,Archery Range
-53,Castle,Courtyard,Steps
-54,Castle,Courtyard,Inner Garden
-55,Castle,Courtyard,Main Bailey
-56,Castle,Inner Garden,South Wing
-57,Castle,Inner Garden,Courtyard
-58,Castle,Inner Garden,Steps
-59,Castle,Main Bailey,Courtyard
-60,Castle,Main Bailey,Barracks
-61,Castle,Main Bailey,Marketplace
-62,Castle,Main Bailey,Blacksmith
-63,Castle,Main Bailey,Stable
-64,Castle,Main Bailey,Gate
-65,Castle,Marketplace,Main Bailey
-66,Castle,Marketplace,Barracks
-67,Castle,Marketplace,Gate
-68,Castle,Blacksmith,Main Bailey
-69,Castle,Blacksmith,Stable
-70,Castle,Stable,Blacksmith
-71,Castle,Stable,Main Bailey
-72,Castle,Stable,Gate
-73,Castle,Draw Bridge,Gate
-74,Castle,Draw Bridge,North Bank
-75,Castle,Draw Bridge,Seige Encampment
-76,Castle,Draw Bridge,Seige Headquarters
-77,Castle,Draw Bridge,South Bank
-78,Castle,North Bank,Siege Tower
-79,Castle,North Bank,Draw Bridge
-80,Castle,North Bank,Seige Encampment
-81,Castle,Seige Encampment,Seige Headquarters
-82,Castle,Seige Encampment,South Bank
-83,Castle,Seige Encampment,Draw Bridge
-84,Castle,Seige Encampment,North Bank
-85,Castle,Seige Headquarters,South Bank
-86,Castle,Seige Headquarters,Seige Encampment
-87,Castle,South Bank,Postern
-88,Castle,South Bank,Seige Encampment
-89,Castle,South Bank,Seige Headquarters
-90,Castle,South Bank,Draw Bridge
-91,Castle,Siege Tower,North Bank
-92,Castle,Siege Tower,Eastern Ramparts
-93,Castle,Gate,Draw Bridge
-94,Castle,Gate,Main Bailey
-95,Castle,Gate,Main Bailey
-96,Castle,Gate,Stable
+Id,TerritoryId,ConenctedTerritoryId
+1,23,25
+2,25,26
+3,25,22
+4,25,15
+5,25,23
+6,26,25
+7,26,22
+8,22,27
+9,22,24
+10,22,21
+11,22,14
+12,22,25
+13,22,26
+14,24,21
+15,24,22
+16,24,30
+17,27,22
+18,21,22
+19,21,24
+20,21,30
+21,28,30
+22,30,28
+23,30,24
+24,30,21
+25,30,13
+26,30,30
+27,30,32
+28,30,30
+29,30,6
+30,32,30
+31,32,18
+32,15,25
+33,15,16
+34,15,12
+35,16,15
+36,16,19
+37,16,17
+38,19,17
+39,19,16
+40,17,16
+41,17,9
+42,17,10
+43,17,20
+44,20,17
+45,20,18
+46,20,5
+47,18,20
+48,18,32
+49,14,12
+50,14,13
+51,14,22
+52,12,15
+53,12,14
+54,12,13
+55,12,9
+56,13,30
+57,13,12
+58,13,14
+59,9,12
+60,9,17
+61,9,10
+62,9,7
+63,9,11
+64,9,8
+65,10,9
+66,10,17
+67,10,8
+68,7,9
+69,7,11
+70,11,7
+71,11,9
+72,11,8
+73,1,8
+74,1,2
+75,1,3
+76,1,4
+77,1,6
+78,2,5
+79,2,1
+80,2,3
+81,3,4
+82,3,6
+83,3,1
+84,3,2
+85,4,6
+86,4,3
+87,6,30
+88,6,3
+89,6,4
+90,6,1
+91,5,2
+92,5,20
+93,8,1
+94,8,9
+95,8,9
+96,8,11

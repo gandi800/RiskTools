@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="" />
+    <meta name="author" content="Gandi800" />
+    <meta name="theme-color" content="#712cf9" />
+    <link rel="shortcut icon" href="#" />
+    <link rel="shortcut icon" href="img/favicon.ico" />
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+        integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+
+<body>
+    <style>
+        .territory {
+            fill-opacity: 0.4;
+            fill: black;
+            stroke-opacity: 1;
+            stroke-width: 2px;
+            stroke: rgb(255, 255, 255);
+        }
+
+        .terHighlight {
+            fill-opacity: 0.8;
+            fill: white;
+        }
+
+        .territory:hover {
+            fill-opacity: 0.2;
+            stroke-opacity: 0.5;
+        }
+
+        svg text {
+            text-anchor: middle;
+            /* dominant-baseline: middle; */
+            fill: white;
+            font-size: 20px;
+            text-shadow: rgb(0, 0, 0) 2px 0px 0px,
+                rgb(0, 0, 0) 1.75517px 0.958851px 0px,
+                rgb(0, 0, 0) 1.0806px 1.68294px 0px,
+                rgb(0, 0, 0) 0.141474px 1.99499px 0px,
+                rgb(0, 0, 0) -0.832294px 1.81859px 0px,
+                rgb(0, 0, 0) -1.60229px 1.19694px 0px,
+                rgb(0, 0, 0) -1.97998px 0.28224px 0px,
+                rgb(0, 0, 0) -1.87291px -0.701566px 0px,
+                rgb(0, 0, 0) -1.30729px -1.5136px 0px,
+                rgb(0, 0, 0) -0.421592px -1.95506px 0px,
+                rgb(0, 0, 0) 0.567324px -1.91785px 0px,
+                rgb(0, 0, 0) 1.41734px -1.41108px 0px,
+                rgb(0, 0, 0) 1.92034px -0.558831px 0px;
+        }
+
+        .wrapper {
+            top: 80px;
+            width: 100vw;
+            overflow: auto;
+        }
+
+        .content {
+            position: relative;
+        }
+
+        .canvas {
+            position: absolute;
+        }
+
+        .canvas:hover {
+            cursor: default;
+        }
+
+        .picture {
+            position: absolute;
+        }
+
+        .button {
+            padding: 4px;
+            margin: 4px;
+            border: 1px solid black;
+            float: left;
+        }
+
+        .button:hover {
+            background-color: blue;
+            color: white;
+            cursor: pointer;
+        }
+
+        .add-mode {
+            cursor: copy !important;
+        }
+
+        #terrTbl tr,
+        #connTbl tr {
+            background-color: gray;
+        }
+    </style>
+    <header class="site-header sticky-top py-1">
+        <nav class="navbar navbar-expand-lg bg-primary">
+            <div class="container-fluid">
+                <a href="index.html" class="navbar-brand">Risk Global Domination Helper</a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Other Tools
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" href="https://ryanxzhu.github.io/RiskCalculator/">Roll
+                                        Calculator</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item"
+                                        href="https://riskcalc.wixsite.com/riskblitzcalculator/calculator">Blitz
+                                        Calculator</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                Recources
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li>
+                                    <a class="dropdown-item" target="_blank"
+                                        href="https://risk-global-domination.fandom.com/wiki/Risk">Risk: Global
+                                        Domination Wiki</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" target="_blank" href="https://discord.com/invite/risk"><i
+                                            class="fa-brands fa-discord"></i> Discord</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" target="_blank"
+                                        href="/svg-path-builder/svg-path-builder/dist/index.html">SVG Mapper</a>
+                                </li>
+                                <li>
+                                    <hr class="dropdown-divider" />
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" target="_blank"
+                                        href="https://store.steampowered.com/app/1128810/RISK_Global_Domination/"><i
+                                            class="fa-brands fa-steam"></i> Steam</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" target="_blank"
+                                        href="https://play.google.com/store/apps/details?id=com.hasbro.riskbigscreen&hl=en_US&gl=US"><i
+                                            class="fa-brands fa-google-play"></i> Android</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" target="_blank"
+                                        href="https://apps.apple.com/us/app/risk-global-domination/id1051334048"><i
+                                            class="fa-brands fa-app-store-ios"></i> iOS</a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <form class="w-25">
+                        <select class="form-select" id="mapSelect"></select>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+    <main>
+        <div class="row">
+            <div class="col" id="imgCont">
+                <div class="wrapper">
+                    <div class="content">
+                        <svg id="mapSvg" class="canvas" width="1366" height="734" viewBox="0 0 1366 734"
+                            style="position:absolutes;top:0;left:0;" preserveAspectRatio="xMinYMin meet"></svg>
+                        <image id="mapImg" width="1366" height="734" src=""></image>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <table id="terrTbl" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Territory</th>
+                            <th>Connections</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color: black"></tbody>
+                </table>
+                <tr></tr>
+            </div>
+            <div class="col">
+                <table id="connTbl" class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Territory</th>
+                            <th>Connected Territory</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody style="color: black"></tbody>
+                </table>
+                <tr></tr>
+            </div>
+        </div>
+        <div class="modal fade" id="contModal" tabindex="-1" aria-labelledby="exportModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="contModalLabel">Edit / Add Continents</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col">
+                                <h5>Map Info</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea rows="5" class="form-control" id="mapExport"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <h5>Continent Info</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea rows="5" class="form-control" id="contExport"></textarea>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col">
+                                <h5>Territory Info</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <textarea rows="5" class="form-control" id="terrExport"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.1.js"
+            integrity="sha256-3zlB5s2uwoUzrXK3BT7AX3FyvojsraNFxCc2vC/7pNI=" crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
+            crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
+        <script src="js/mapper.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+
+
+            $(document).ready(function () {
+                main();
+            });
+
+            async function main() {
+                await CreateTables();
+                initDataTables();
+                initMapDdl();
+            }
+
+            function initDataTables() {
+                connTbl = $("#connTbl").DataTable({
+                    paging: false,
+                    info: false,
+                    searching: false
+                });
+
+                terrTbl = $("#terrTbl").DataTable({
+                    paging: false,
+                    info: false,
+                    searching: false
+                });
+            }
+
+            function DeleteConn(x) {
+                alasql.promise(`DELETE FROM Connections WHERE Id = ${x.dataset.id}`);
+                CreateTerRows();
+            }
+
+            function EditConn(x) {
+                $('#tiId').val(x.dataset.id);
+                $('#tiName').val(x.dataset.territoryname);
+                $('#tiPoints').val(x.dataset.points);
+                $('#tiXOff').val(x.dataset.xoff);
+                $('#tiYOff').val(x.dataset.yoff);
+                $(`#tiCont`).val(x.dataset.continent);
+            }
+
+            $(document).on('keypress', function (e) {
+                if (e.which == 13 && trace()) {
+                    ConnAddUpdate();
+                }
+            });
+
+            function ConnAddUpdate() {
+                alasql.promise(`SELECT * FROM Connections WHERE Id = "${$('#tiId').val()}"`).then(function (res) {
+                    var ContId = $('#tiCont').val() ? $('#tiCont').val() : -1
+                    if (res.length > 0) {
+                        alasql.promise(`
+                                UPDATE Territories
+                                SET
+                                    Continent = "${ContId}", 
+                                    TerritoryName = "${$('#tiName').val()}",
+                                    NameXOffset = "${$('#tiXOff').val()}",
+                                    NameYOffset = "${$('#tiYOff').val()}",
+                                    Points = "${$('#tiPoints').val()}"
+                                WHERE 
+                                    Id = "${$('#tiId').val()}"`
+                        ).then(ClearTer());
+                    } else {
+                        alasql.promise(`
+                                INSERT INTO Territories
+                                (
+                                    Id,
+                                    Map,
+                                    Continent, 
+                                    TerritoryName, 
+                                    NameXOffset,
+                                    NameYOffset,
+                                    Points
+                                )
+                                VALUES (
+                                    "${$('#tiId').val()}",
+                                    "${map}",
+                                    "${ContId}",
+                                    "${$('#tiName').val()}",
+                                    "${$('#tiXOff').val()}",
+                                    "${$('#tiYOff').val()}",
+                                    "${$('#tiPoints').val()}"
+                                )
+                            `).then(ClearTer());
+                    }
+
+                });
+            }
+
+            function ClearTer() {
+                alasql.promise(`SELECT MAX(Id)+1 Id FROM Territories`
+                ).then(function (res) {
+                    $('#tiId').val(res[0].Id);
+                    $('#tiName').val("");
+                    $('#tiPoints').val("");
+                    $('#tiXOff').val(0);
+                    $('#tiYOff').val(0);
+                    CreateTerRows();
+                });
+            }
+
+            function CreateTerRows() {
+                terrTbl.rows().remove().draw();
+
+                doneTer = 0
+                terrs = alasql(`
+                    SELECT 
+                        t.Id,
+                        t.TerritoryName, 
+                        COUNT(*) ct 
+                    FROM Territories t 
+                    LEFT JOIN Connections c 
+                        ON t.Id = c.TerritoryId
+                    GROUP BY  t.Id, t.TerritoryName
+                `)
+                $.each(terrs, function () {
+
+                    if ($(this)[0].Points) { doneTer += 1 }
+
+                    var row = terrTbl.row
+                        .add([
+                            $(this)[0].Id,
+                            $(this)[0].TerritoryName,
+                            $(this)[0].ct,
+                            `<button type="button" class="btn btn-sm btn-primary" onmouseout="clearTerHighlight()" onmouseover="HighlightTer(this)" data-id="${$(this)[0].Id}"><i class="fa-solid fa-eye"></i></button>`
+                        ])
+                        .draw()
+                        .node();
+                });
+            }
+
+            function CreateConnRows() {
+                connTbl.rows().remove().draw();
+
+                conns = alasql(`SELECT * FROM Connections c`)
+                $.each(conns, function () {
+                    var row = connTbl.row
+                        .add([
+                            $(this)[0].Id,
+                            $(this)[0].TerritoryId,
+                            $(this)[0].ConenctedTerritoryId,
+                            `<button type="button" class="btn btn-sm btn-danger" 
+                                onmouseout="clearTerHighlight()" onmouseover="HighlightTer(this)" 
+                                onclick="DeleteConn(this)" data-id="${$(this)[0].Id}">
+                                <i class="fa-solid fa-xmark"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="EditTer(this)" 
+                                data-Id="${$(this)[0].Id}"
+                                data-TerritoryId="${$(this)[0].TerritoryId}"
+                                data-ConnTerrId="${$(this)[0].ConenctedTerritoryId}"
+                                onmouseout="clearTerHighlight()" onmouseover="HighlightTer(this)">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </button>`
+                        ])
+                        .draw()
+                        .node();
+                });
+
+            }
+
+
+            function clearTerHighlight() {
+                $.each(document.querySelectorAll(".terHighlight"), function () {
+                    $(this)[0].classList.remove("terHighlight");
+                })
+
+            }
+
+            function HighlightTer(x) {
+                var y = document.querySelector(`path[data-id="${x.dataset.id}"]`)
+                if (!y.classList.contains("class")) {
+                    y.classList.add("terHighlight");
+                }
+            }
+
+            document.addEventListener('MapLoaded', (e) => {
+                CreateTerRows();
+                CreateConnRows();
+            }, false);
+
+            function exportMapData() {
+                var contData = "Id,Map,Continent,TroopBonus,Color,TerritoryCount\n";
+                var terData = "Id,Map,TerritoryName,Continent,NameXOffset,NameYOffset,Points\n";
+                $.each(alasql(`SELECT * FROM Maps WHERE Map ="${map}"`), function () {
+                    $('#mapExport').text(
+                        $(this)[0].Id + "," +
+                        map + "," +
+                        $(this)[0].Name + "," +
+                        $(this)[0].Blizzards + "," +
+                        $(this)[0].Portals + "," +
+                        $(this)[0].TotalTerritories + "," +
+                        $(this)[0].TotalContinents
+                    )
+                })
+                $.each(alasql(`SELECT * FROM Continents`), function () {
+                    contData +=
+                        $(this)[0].Id + "," +
+                        map + "," +
+                        $(this)[0].Continent + "," +
+                        $(this)[0].TroopBonus + "," +
+                        $(this)[0].Color + "," +
+                        $(this)[0].TerritoryCount + "\n"
+                })
+
+                $('#contExport').text(contData);
+
+                $.each(alasql(`SELECT * FROM Territories`), function () {
+                    terData +=
+                        $(this)[0].Id + "," +
+                        map + "," +
+                        $(this)[0].TerritoryName + "," +
+                        $(this)[0].Continent + "," +
+                        $(this)[0].NameXOffset + "," +
+                        $(this)[0].NameYOffset + "," +
+                        $(this)[0].Points + "\n"
+                })
+
+                $('#terrExport').text(terData);
+                $('#contModal').modal('show');
+            }
+
+
+        </script>
+    </main>
+</body>
+
+</html>

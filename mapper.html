@@ -19,11 +19,16 @@
 <body>
     <style>
         .territory {
-            fill-opacity: 0.2;
-            fill: white;
+            fill-opacity: 0.4;
+            fill: black;
             stroke-opacity: 1;
             stroke-width: 2px;
             stroke: rgb(255, 255, 255);
+        }
+
+        .terHighlight {
+            fill-opacity: 0.8;
+            fill: white;
         }
 
         .territory:hover {
@@ -88,6 +93,10 @@
 
         .add-mode {
             cursor: copy !important;
+        }
+
+        #terrTbl tr {
+            background-color: gray;
         }
     </style>
     <header class="site-header sticky-top py-1">
@@ -231,9 +240,13 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col">
+                            <div class="col-3">
                                 <label>MapId</label>
                                 <input type="text" id="miMapId" class="form-control" disabled />
+                            </div>
+                            <div class="col-3">
+                                <label>MapId</label>
+                                <input type="text" id="miMapIdNm" class="form-control" disabled />
                             </div>
                             <div class="col">
                                 <label>MapName</label>
@@ -267,6 +280,10 @@
                             </div>
                             <div class="row">
                                 <div class="col">
+                                    <label>Id</label>
+                                    <input disabled type="text" id="ciId" class="form-control" />
+                                </div>
+                                <div class="col">
                                     <label>ContName</label>
                                     <input type="text" id="ciContName" class="form-control" />
                                 </div>
@@ -282,9 +299,14 @@
                                     <label>Color</label>
                                     <input type="text" class="form-control" id="ciColor">
                                 </div>
-                                <div class="col">
+                                <div class="col-1">
                                     <button type="button" class="btn btn-primary mt-4" onclick="ContAddUpdate()">
                                         Save
+                                    </button>
+                                </div>
+                                <div class="col-1">
+                                    <button type="button" class="btn btn-accent mt-4" onclick="clearContEdit()">
+                                        Clear
                                     </button>
                                 </div>
                             </div>
@@ -314,6 +336,10 @@
                         <div class="row">
                             <div class="col">
                                 <div class="row mb-3">
+                                    <div class="col-2">
+                                        <label>Id</label>
+                                        <input type="text" class="form-control" id="tiId" disabled />
+                                    </div>
                                     <div class="col">
                                         <label>Continent</label>
                                         <select class="form-select" id="tiCont"></select>
@@ -341,9 +367,13 @@
                                         </div>
 
                                     </div>
-                                    <div class="col">
+                                    <div class="col-1">
                                         <button type="button" class="btn btn-primary mt-4 btn-block"
                                             onclick="TerAddUpdate()">Save</button>
+                                    </div>
+                                    <div class="col-1">
+                                        <button type="button" class="btn btn-accent mt-4 btn-block"
+                                            onclick="ClearTer()">Clear</button>
                                     </div>
                                 </div>
                             </div>
@@ -354,7 +384,7 @@
                             <table id="terrTbl" class="table table-sm">
                                 <thead>
                                     <tr>
-                                        <th>Done</th>
+                                        <th>Id</th>
                                         <th>Territory</th>
                                         <th>Continent</th>
                                         <th>X/Y Offset</th>
@@ -425,6 +455,7 @@
         <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
         <script src="https://unpkg.com/magic-wand-tool@latest/dist/magic-wand.min.js"></script>
         <script src="js/mapper.js"></script>
+        <script src="js/main.js"></script>
         <script>
 
             var mapName = "";
@@ -437,10 +468,6 @@
             var conTble;
             var connecTbl;
             var terrTbl;
-            var maps;
-            var conts;
-            var terrs;
-            var conns;
 
             $(document).ready(function () {
                 main();
@@ -450,30 +477,6 @@
                 await CreateTables();
                 initDataTables();
                 initMapDdl();
-            }
-
-            async function initMapDdl() {
-                maps = await LoadMaps();
-
-                $.each(maps, function () {
-                    $("#mapSelect").append(
-                        $("<option>", {
-                            value: $(this)[0].Map,
-                            text:
-                                ($(this)[0].Done == 0 ? "To Do - " : "") + $(this)[0].Name,
-                            disabled: $(this)[0].Done == 0,
-                        })
-                    );
-                });
-
-                $("#mapSelect").prepend(
-                    $("<option>", {
-                        value: -1,
-                        text: "Select Map...",
-                        disabled: true,
-                        selected: true,
-                    })
-                );
             }
 
             function initDataTables() {
@@ -492,39 +495,7 @@
                 });
             }
 
-            async function CreateTables() {
-                alasql(
-                    "CREATE TABLE Maps (Map string, Name string, Blizzards number, Portals number, TotalTerritories number, TotalContinents number, Done number)"
-                );
-                alasql(
-                    "CREATE TABLE Continents (Map string ,Continent string, TroopBonus number, Color string, TerritoryCount number)"
-                );
-                alasql(
-                    "CREATE TABLE Territories (Map string, TerritoryName string, Continent string, NameXOffset number, NameYOffset number,Points string)"
-                );
-            }
-
-            async function LoadMaps() {
-                await alasql.promise(
-                    `SELECT * INTO Maps FROM CSV("data/maps.csv", {headers:true})`
-                );
-                return await alasql(
-                    `SELECT * FROM Maps ORDER BY Done DESC, Name ASC`
-                );
-            }
-
-            async function LoadContinents() {
-                await alasql.promise(`DELETE FROM Continents`);
-                conts = await alasql.promise(
-                    `SELECT * INTO Continents FROM CSV("data/` +
-                    map +
-                    `/continents.csv", {headers:true}) ORDER BY Continent`
-                );
-                DrawContinents();
-
-            }
-
-            function DrawContinents() {
+            function CreateContRows() {
                 conTble.rows().remove().draw();
                 conts = alasql(`SELECT * FROM Continents ORDER BY Continent`);
 
@@ -539,7 +510,8 @@
                                     data-contName="${$(this)[0].Continent}"
                                     data-contBonus="${$(this)[0].TroopBonus}"
                                     data-contTer="${$(this)[0].TerritoryCount}"
-                                    data-contColor="${$(this)[0].Color}">
+                                    data-contColor="${$(this)[0].Color}"
+                                    data-id="${$(this)[0].Id}">
                                     <i class="fa-solid fa-pen-to-square"></i></button>`,
                             $(this)[0].Color,
                         ])
@@ -548,7 +520,7 @@
                     $(row).css("background-color", $(this)[0].Color);
                 });
                 UpdateContDdl();
-
+                clearContEdit();
                 doneCont = conts.length
                 $('#contDone').text(doneCont + "/" + mapCont)
             }
@@ -558,7 +530,7 @@
                 $.each(conts, function () {
                     $("#tiCont").append(
                         $("<option>", {
-                            value: $(this)[0].Continent,
+                            value: $(this)[0].Id,
                             text: $(this)[0].Continent
                         })
                     );
@@ -575,32 +547,17 @@
             }
 
             function Deletecont(x) {
-                alasql.promise(`DELETE FROM Continents WHERE Continent = "${x.dataset.contname}"`)
-                DrawContinents();
+                alasql.promise(`DELETE FROM Continents WHERE Id = "${x.dataset.Id}"`)
+                CreateContRows();
             }
 
             function EditCont(x) {
+                $('#ciId').val(x.dataset.id);
                 $('#ciContName').val(x.dataset.contname);
                 $('#ciBonus').val(x.dataset.contbonus);
                 $('#ciTerr').val(x.dataset.contter);
                 $('#ciColor').val(x.dataset.contcolor);
-
-
-                $('#contModal').modal('show');
             }
-
-            function NewCont() {
-                $('#ciContName').val("");
-                $('#ciBonus').val(1);
-                $('#ciTerr').val(1);
-                $('#ciColor').val("#");
-
-                $('#contModal').modal('show');
-            }
-
-            $('#contModal').on('shown.bs.modal', function () {
-                $('#ciContName').focus();
-            });
 
             function ContAddUpdate() {
                 alasql.promise(`SELECT * FROM Continents WHERE Continent = "${$('#ciContName').val()}"`).then(function (res) {
@@ -613,11 +570,12 @@
                                     TerritoryCount = "${$('#ciTerr').val()}"
                                 WHERE 
                                     Continent = "${$('#ciContName').val()}"`
-                        ).then(DrawContinents());
+                        ).then(CreateContRows());
                     } else {
                         alasql.promise(`
                                 INSERT INTO Continents
                                 (
+                                    Id,
                                     Map,
                                     Continent, 
                                     TroopBonus, 
@@ -625,36 +583,35 @@
                                     TerritoryCount 
                                 )
                                 VALUES (
+                                    "${$('#ciId').val()}",
                                     "${map}",
                                     "${$('#ciContName').val()}",
                                     "${$('#ciBonus').val()}",
                                     "${$('#ciColor').val()}",
                                     "${$('#ciTerr').val()}" 
                                 )
-                            `).then(DrawContinents());
+                            `).then(CreateContRows());
                     }
-
                 });
 
-                $('#contModal').modal('hide');
             }
 
-            async function LoadTerritories() {
-                await alasql.promise(`DELETE FROM Territories`);
-                await alasql.promise(
-                    `SELECT * INTO Territories FROM CSV("data/` +
-                    map +
-                    `/territories.csv", {headers:true}) ORDER BY Continent, TerritoryName`
-                );
-                DrawTerritories();
+            function clearContEdit() {
+                alasql.promise(`SELECT MAX(Id)+1 Id FROM Continents`
+                ).then(function (res) {
+                    $('#ciId').val(res[0].Id);
+                });
             }
+
+
 
             function DeleteTer(x) {
-                alasql.promise(`DELETE FROM Territories WHERE TerritoryName = "${x.dataset.territoryname}"`);
-                DrawTerritories();
+                alasql.promise(`DELETE FROM Territories WHERE Id = ${x.dataset.id}`);
+                CreateTerRows();
             }
 
             function EditTer(x) {
+                $('#tiId').val(x.dataset.id);
                 $('#tiName').val(x.dataset.territoryname);
                 $('#tiPoints').val(x.dataset.points);
                 $('#tiXOff').val(x.dataset.xoff);
@@ -662,25 +619,33 @@
                 $(`#tiCont`).val(x.dataset.continent);
             }
 
+            $(document).on('keypress', function (e) {
+                if (e.which == 13 && trace()) {
+                    TerAddUpdate();
+                }
+            });
+
             function TerAddUpdate() {
                 trace();
-                alasql.promise(`SELECT * FROM Territories WHERE TerritoryName = "${$('#tiName').val()}"`).then(function (res) {
+                alasql.promise(`SELECT * FROM Territories WHERE Id = "${$('#tiId').val()}"`).then(function (res) {
+                    var ContId = $('#tiCont').val() ? $('#tiCont').val() : -1
                     if (res.length > 0) {
                         alasql.promise(`
                                 UPDATE Territories
                                 SET
-                                    Continent = "${$('#tiCont').val()}", 
+                                    Continent = "${ContId}", 
                                     TerritoryName = "${$('#tiName').val()}",
                                     NameXOffset = "${$('#tiXOff').val()}",
                                     NameYOffset = "${$('#tiYOff').val()}",
                                     Points = "${$('#tiPoints').val()}"
                                 WHERE 
-                                    TerritoryName = "${$('#tiName').val()}"`
+                                    Id = "${$('#tiId').val()}"`
                         ).then(ClearTer());
                     } else {
                         alasql.promise(`
                                 INSERT INTO Territories
                                 (
+                                    Id,
                                     Map,
                                     Continent, 
                                     TerritoryName, 
@@ -689,8 +654,9 @@
                                     Points
                                 )
                                 VALUES (
+                                    "${$('#tiId').val()}",
                                     "${map}",
-                                    "${$('#tiCont').val()}",
+                                    "${ContId}",
                                     "${$('#tiName').val()}",
                                     "${$('#tiXOff').val()}",
                                     "${$('#tiYOff').val()}",
@@ -703,38 +669,41 @@
             }
 
             function ClearTer() {
-                $('#tiName').val("");
-                $('#tiPoints').val("");
-                $('#tiXOff').val(0);
-                $('#tiYOff').val(0);
-                DrawTerritories();
+                alasql.promise(`SELECT MAX(Id)+1 Id FROM Territories`
+                ).then(function (res) {
+                    $('#tiId').val(res[0].Id);
+                    $('#tiName').val("");
+                    $('#tiPoints').val("");
+                    $('#tiXOff').val(0);
+                    $('#tiYOff').val(0);
+                    CreateTerRows();
+                });
             }
 
-            function DrawTerritories() {
+            function CreateTerRows() {
                 terrTbl.rows().remove().draw();
-                var svg = document.getElementById("mapSvg");
 
-                $('#mapSvg path').remove();
-                $('#mapSvg text').remove();
                 doneTer = 0
-                terrs = alasql(`SELECT t.*, c.Color FROM Territories t LEFT JOIN Continents c ON t.Continent = c.Continent ORDER BY t.Continent, t.TerritoryName`)
+                terrs = alasql(`SELECT t.*, c.Color FROM Territories t LEFT JOIN Continents c ON t.Continent = c.Id ORDER BY t.Continent, t.TerritoryName`)
                 $.each(terrs, function () {
 
                     if ($(this)[0].Points) { doneTer += 1 }
 
                     var row = terrTbl.row
                         .add([
-                            ($(this)[0].Points ? `<i class="fa-solid fa-check"></i>` : ""),
+                            `<span class="terId">${$(this)[0].Id}</span>`,
                             $(this)[0].TerritoryName,
                             $(this)[0].Continent,
                             "X:" + $(this)[0].NameXOffset + " Y:" + $(this)[0].NameYOffset,
-                            `<button type="button" class="btn btn-sm btn-danger" onclick="DeleteTer(this)" data-territoryname="${$(this)[0].TerritoryName}"><i class="fa-solid fa-xmark"></i></button>
+                            `<button type="button" class="btn btn-sm btn-danger" onmouseout="clearTerHighlight()" onmouseover="HighlightTer(this)" onclick="DeleteTer(this)" data-id="${$(this)[0].Id}"><i class="fa-solid fa-xmark"></i></button>
                                 <button type="button" class="btn btn-sm btn-primary" onclick="EditTer(this)" 
+                                    data-Id="${$(this)[0].Id}"
                                     data-TerritoryName="${$(this)[0].TerritoryName}"
                                     data-Continent="${$(this)[0].Continent}"
                                     data-xoff="${$(this)[0].NameXOffset}"
                                     data-yoff="${$(this)[0].NameYOffset}"
                                     data-points="${$(this)[0].Points}"
+                                    onmouseout="clearTerHighlight()" onmouseover="HighlightTer(this)"
                                     >
                                     <i class="fa-solid fa-pen-to-square"></i></button>`,
                             $(this)[0].Color,
@@ -745,78 +714,36 @@
                     $(row).css("background-color", $(this)[0].Color);
 
 
-                    var terPath = document.createElementNS(
-                        "http://www.w3.org/2000/svg",
-                        "path"
-                    ); //Create a path in SVG's namespace
-                    terPath.setAttribute("d", $(this)[0].Points);
-                    terPath.setAttribute("data-name", $(this)[0].TerritoryName);
-                    terPath.setAttribute("data-xoff", $(this)[0].NameXOffset);
-                    terPath.setAttribute("data-yoff", $(this)[0].NameYOffset);
-                    terPath.setAttribute("data-continent", $(this)[0].Continent);
-                    terPath.setAttribute("style", `stroke:${$(this)[0].Color}`);
-                    terPath.setAttribute("class", "territory");
-                    svg.appendChild(terPath);
-
                 });
-
-                addTerritoriesName();
 
                 $('#terDone').text(doneTer + "/" + mapTer)
-            }
-
-            function addTerritoriesName() {
-                var paths = $("path");
-
-                $.each(paths, function () {
-                    addText($(this));
-                });
-
-            }
-
-            function addText(d) {
-                var p = d[0];
-                //if (typeof p.getBBox == 'function') {
-                var t = document.createElementNS(
-                    "http://www.w3.org/2000/svg",
-                    "text"
-                );
-                var b = p.getBBox();
-
-                var x = d.attr("data-xoff") * 1;
-                var y = d.attr("data-yoff") * 1;
-                t.setAttribute(
-                    "transform",
-                    "translate(" +
-                    ((b.x + b.width / 2) + x) +
-                    " " +
-                    ((b.y + b.height / 2) + y) +
-                    ")"
-                );
-                t.textContent = d.attr("data-name");
-                t.setAttribute("class", "names");
-                p.parentNode.insertBefore(t, p.nextSibling);
-            }
-
-            function DeleteTer(x) {
-                alasql.promise(`DELETE FROM Territories WHERE TerritoryName = "${x.dataset.territoryname}"`)
-                DrawTerritories();
+                DrawTerrPaths();
             }
 
 
+            function clearTerHighlight() {
+                $.each(document.querySelectorAll(".terHighlight"), function () {
+                    $(this)[0].classList.remove("terHighlight");
+                })
 
-            $("#mapSelect").change(function () {
-                map = $(this).val();
-                if (map != -1) {
-                    MapChange();
-                    LoadMapdata();
+            }
+
+            function HighlightTer(x) {
+                var y = document.querySelector(`path[data-id="${x.dataset.id}"]`)
+                if (!y.classList.contains("class")) {
+                    y.classList.add("terHighlight");
                 }
-            });
+            }
+
+            document.addEventListener('MapLoaded', (e) => {
+                LoadMapdata();
+            }, false);
 
             function LoadMapdata() {
                 var res = alasql(`SELECT * FROM Maps WHERE Map = "${map}"`)
 
-                $('#miMapId').val(res[0].Map)
+                $('#miMapId').val(res[0].Id)
+                $('#miMapIdNm').val(res[0].Map)
                 $('#miMapName').val(res[0].Name)
                 $('#miBlizzards').val(res[0].Blizzards)
                 $('#miPortals').val(res[0].Portals)
@@ -825,6 +752,8 @@
 
                 mapCont = res[0].TotalContinents;
                 mapTer = res[0].TotalTerritories;
+                CreateContRows();
+                CreateTerRows();
             }
 
             function UpdateMapdata() {
@@ -841,23 +770,12 @@
                     `).then(LoadMapdata())
             }
 
-            miUpdate
-
-            async function MapChange() {
-                $("#mapImg").attr("src", `./img/${map}.png`);
-                var img = document.getElementById("mapImg");
-
-                await LoadContinents();
-                await LoadTerritories();
-
-                window.initCanvas(img);
-            }
-
             function exportMapData() {
-                var contData = "Map,Continent,TroopBonus,Color,TerritoryCount\n";
-                var terData = "Map,TerritoryName,Continent,NameXOffset,NameYOffset,Points\n";
+                var contData = "Id,Map,Continent,TroopBonus,Color,TerritoryCount\n";
+                var terData = "Id,Map,TerritoryName,Continent,NameXOffset,NameYOffset,Points\n";
                 $.each(alasql(`SELECT * FROM Maps WHERE Map ="${map}"`), function () {
                     $('#mapExport').text(
+                        $(this)[0].Id + "," +
                         map + "," +
                         $(this)[0].Name + "," +
                         $(this)[0].Blizzards + "," +
@@ -868,6 +786,7 @@
                 })
                 $.each(alasql(`SELECT * FROM Continents`), function () {
                     contData +=
+                        $(this)[0].Id + "," +
                         map + "," +
                         $(this)[0].Continent + "," +
                         $(this)[0].TroopBonus + "," +
@@ -879,6 +798,7 @@
 
                 $.each(alasql(`SELECT * FROM Territories`), function () {
                     terData +=
+                        $(this)[0].Id + "," +
                         map + "," +
                         $(this)[0].TerritoryName + "," +
                         $(this)[0].Continent + "," +

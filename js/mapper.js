@@ -184,42 +184,48 @@ function drawBorder(noBorder) {
   ctx.putImageData(imgData, 0, 0);
 }
 function trace() {
-  var cs = MagicWand.traceContours(mask);
-  cs = MagicWand.simplifyContours(cs, simplifyTolerant, simplifyCount);
+  try {
+    var cs = MagicWand.traceContours(mask);
+    cs = MagicWand.simplifyContours(cs, simplifyTolerant, simplifyCount);
 
-  mask = null;
+    mask = null;
 
-  // draw contours
-  var ctx = imageInfo.context;
-  ctx.clearRect(0, 0, imageInfo.width, imageInfo.height);
-  //inner
-  ctx.beginPath();
-  for (var i = 0; i < cs.length; i++) {
-    if (!cs[i].inner) continue;
-    var ps = cs[i].points;
-    ctx.moveTo(ps[0].x, ps[0].y);
-    for (var j = 1; j < ps.length; j++) {
-      ctx.lineTo(ps[j].x, ps[j].y);
-    }
-  }
-
-  //outer
-  ctx.beginPath();
-  var d = "";
-  for (var i = 0; i < cs.length; i++) {
-    if (cs[i].inner) continue;
-    var ps = cs[i].points;
-    ctx.moveTo(ps[0].x, ps[0].y);
-    for (var j = 1; j < ps.length; j++) {
-      ctx.lineTo(ps[j].x, ps[j].y);
-      if (j == 1) {
-        d += "M ";
-      } else {
-        d += " L ";
+    // draw contours
+    var ctx = imageInfo.context;
+    ctx.clearRect(0, 0, imageInfo.width, imageInfo.height);
+    //inner
+    ctx.beginPath();
+    for (var i = 0; i < cs.length; i++) {
+      if (!cs[i].inner) continue;
+      var ps = cs[i].points;
+      ctx.moveTo(ps[0].x, ps[0].y);
+      for (var j = 1; j < ps.length; j++) {
+        ctx.lineTo(ps[j].x, ps[j].y);
       }
-      d += ps[j].x + " " + ps[j].y;
     }
-    $('#tiPoints').val(d);
+
+    //outer
+    ctx.beginPath();
+    var d = "";
+    for (var i = 0; i < cs.length; i++) {
+      if (cs[i].inner) continue;
+      var ps = cs[i].points;
+      ctx.moveTo(ps[0].x, ps[0].y);
+      for (var j = 1; j < ps.length; j++) {
+        ctx.lineTo(ps[j].x, ps[j].y);
+        if (j == 1) {
+          d += "M ";
+        } else {
+          d += " L ";
+        }
+        d += ps[j].x + " " + ps[j].y;
+      }
+      $("#tiPoints").val(d);
+    }
+
+    return true;
+  } catch (error) {
+    return false;
   }
 }
 function paint(color, alpha) {
