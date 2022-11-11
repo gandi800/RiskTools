@@ -1,81 +1,81 @@
-Map,Name,Blizzards,Portals,TotalTerritories,TotalContinents,Done
-28_turns_later,28 Turns Later,3,2,50,10,1
-africa,Africa,3,2,37,7,1
-africa_advanced,Africa Advanced,3,2,50,9,1
-alcatraz,Alcatraz,3,2,39,5,1
-arctic,Arctic,3,2,47,6,1
-asia_1800s,Asia 1800s,3,2,48,9,1
-atlantis,Atlantis,3,2,57,9,1
-blackbeards_wrath,Blackbeard's Wrath,3,2,44,6,1
-bohus_fortress,Bohus Fortress,3,2,65,10,1
-boston,Boston,3,2,42,11,1
-brazil,Brazil,3,2,23,5,1
-brazil_advanced,Brazil Advanced,3,2,56,8,1
-britannia,Britannia,3,2,20,4,1
-britannia_advanced,Britannia Advanced,3,2,49,4,1
-canada,Canada,3,2,53,10,1
-canada_advanced,Canada Advanced,3,2,91,13,1
-castle,Castle,3,2,31,6,1
-central_america,Central America,3,2,61,10,1
-classic,Classic,3,2,42,6,1
-classic_frozen,Classic Frozen,3,2,42,6,1
-command_base_c1x,Command Base C1X,3,2,100,11,1
-conquest_of_stockholm,Conquest of Stockholm,3,2,73,13,1
-conwy_castle,Conwy Castle,3,2,63,9,1
-deutschland,Deutschland,3,2,57,9,1
-dino_canyon,Dino Canyon,3,2,44,8,1
-dino_world,Dino World,3,2,39,9,1
-dracon_fortress,Dracon Fortress,3,2,44,14,1
-draculas_castle,Dracula's Castle,3,2,51,7,1
-earth_2209_ad,Earth 2209 AD,3,2,86,11,1
-enchanted_lands,Enchanted Lands,3,2,32,7,1
-europe,Europe,3,2,44,7,1
-europe_advanced,Europe Advanced,3,2,83,14,1
-forsaken_lands,Forsaken Lands,3,2,46,7,1
-france,France,3,2,26,6,1
-greece,Greece,3,2,64,14,1
-grip_of_the_north,Grip of the North,3,2,44,9,1
-himeji_castle,Himeji Castle,3,2,60,11,1
-ibai_and_buddies,Ibai & Buddies,3,2,58,8,1
-iceland,Iceland,3,2,21,4,1
-italy,Italy,3,2,36,7,1
-japan,Japan,3,2,50,9,1
-jules_vernes_mysterious_island,Jules Verne's Mysterious Island,3,2,42,8,1
-koenigsberg,Koenigsberg,3,2,43,10,1
-las_vegas_nevada,Las Vegas Nevada,3,2,58,10,1
-los_angeles,Los Angeles,3,2,41,7,1
-lost_temple,Lost Temple,3,2,45,7,1
-lubeck,Lubeck,3,2,43,9,1
-lunar_mining_facility,Lunar Mining Facility,3,2,62,10,1
-machu_picchu,Machu Picchu,3,2,38,8,1
-mall_of_the_dead,Mall of the Dead,3,2,72,8,1
-modern_spain,Modern Spain,3,2,47,12,1
-mont_saint_michel,Mont Saint Michel,3,2,88,14,1
-moonstone_forest,Moonstone Forest,3,2,47,9,1
-nan_madol,Nan Madol,3,2,42,7,1
-new_york,New York,3,2,34,5,1
-new_zealand_and_australia,New Zealand and Australia,3,2,38,8,1
-ottoman_empire,Ottoman Empire,3,2,38,5,1
-overworld,Overworld,3,2,74,6,1
-pangaea,Pangaea,3,2,65,7,1
-pirates_bay,Pirate's Bay,3,2,83,11,1
-qing_dynasty,Qing Dynasty,3,2,35,8,1
-red_sands_fort,Red Sands Fort,3,2,64,9,1
-redacted,REDACTED,3,2,47,11,1
-reverse_world,Reverse World,3,2,66,10,1
-river_town,River Town,3,2,24,7,1
-river_town_advanced,River Town [Advanced],3,2,68,12,1
-roman_empire,Roman Empire,3,2,43,7,1
-seagrogs_fortress,Seagrogs Fortress,3,2,76,7,1
-seaport,Seaport,3,2,41,8,1
-simple_world,Simple World,3,2,19,6,1
-skull_and_crossbones,Skull & Crossbones,3,2,44,7,1
-spaceport_sigma,Spaceport Sigma,3,2,96,10,1
-stairs_of_knowledge_and_power,Stairs of Knowledge & Power,3,2,41,12,1
-supermax_prison,Supermax Prison,3,2,42,7,1
-the_younger_scrolls,The Younger Scrolls,3,2,66,9,1
-trigons_labyrinth,Trigons Labyrinth,3,2,80,10,1
-troy,Troy,3,2,67,13,1
-turkey,Turkey,3,2,63,7,1
-united_states,United States,3,2,42,9,1
-world_conquest,World Conquest,3,2,47,6,1
+Id,Map,Name,Blizzards,Portals,TotalTerritories,TotalContinents,Done
+1,28_turns_later,28 Turns Later,3,2,50,10,1
+2,africa,Africa,3,2,37,7,1
+3,africa_advanced,Africa Advanced,3,2,50,9,1
+4,alcatraz,Alcatraz,3,2,39,5,1
+5,arctic,Arctic,3,2,47,6,1
+6,asia_1800s,Asia 1800s,3,2,48,9,1
+7,atlantis,Atlantis,3,2,57,9,1
+8,blackbeards_wrath,Blackbeard's Wrath,3,2,44,6,1
+9,bohus_fortress,Bohus Fortress,3,2,65,10,1
+10,boston,Boston,3,2,42,11,1
+11,brazil,Brazil,3,2,23,5,1
+12,brazil_advanced,Brazil Advanced,3,2,56,8,1
+13,britannia,Britannia,3,2,20,4,1
+14,britannia_advanced,Britannia Advanced,3,2,49,4,1
+15,canada,Canada,3,2,53,10,1
+16,canada_advanced,Canada Advanced,3,2,91,13,1
+17,castle,Castle,3,2,31,6,1
+18,central_america,Central America,3,2,61,10,1
+19,classic,Classic,3,2,42,6,1
+20,classic_frozen,Classic Frozen,3,2,42,6,1
+21,command_base_c1x,Command Base C1X,3,2,100,11,1
+22,conquest_of_stockholm,Conquest of Stockholm,3,2,73,13,1
+23,conwy_castle,Conwy Castle,3,2,63,9,1
+24,deutschland,Deutschland,3,2,57,9,1
+25,dino_canyon,Dino Canyon,3,2,44,8,1
+26,dino_world,Dino World,3,2,39,9,1
+27,dracon_fortress,Dracon Fortress,3,2,44,14,1
+28,draculas_castle,Dracula's Castle,3,2,51,7,1
+29,earth_2209_ad,Earth 2209 AD,3,2,86,11,1
+30,enchanted_lands,Enchanted Lands,3,2,32,7,1
+31,europe,Europe,3,2,44,7,1
+32,europe_advanced,Europe Advanced,3,2,83,14,1
+33,forsaken_lands,Forsaken Lands,3,2,46,7,1
+34,france,France,3,2,26,6,1
+35,greece,Greece,3,2,64,14,1
+36,grip_of_the_north,Grip of the North,3,2,44,9,1
+37,himeji_castle,Himeji Castle,3,2,60,11,1
+38,ibai_and_buddies,Ibai & Buddies,3,2,58,8,1
+39,iceland,Iceland,3,2,21,4,1
+40,italy,Italy,3,2,36,7,1
+41,japan,Japan,3,2,50,9,1
+42,jules_vernes_mysterious_island,Jules Verne's Mysterious Island,3,2,42,8,1
+43,koenigsberg,Koenigsberg,3,2,43,10,1
+44,las_vegas_nevada,Las Vegas Nevada,3,2,58,10,1
+45,los_angeles,Los Angeles,3,2,41,7,1
+46,lost_temple,Lost Temple,3,2,45,7,1
+47,lubeck,Lubeck,3,2,43,9,1
+48,lunar_mining_facility,Lunar Mining Facility,3,2,62,10,1
+49,machu_picchu,Machu Picchu,3,2,38,8,1
+50,mall_of_the_dead,Mall of the Dead,3,2,72,8,1
+51,modern_spain,Modern Spain,3,2,47,12,1
+52,mont_saint_michel,Mont Saint Michel,3,2,88,14,1
+53,moonstone_forest,Moonstone Forest,3,2,47,9,1
+54,nan_madol,Nan Madol,3,2,42,7,1
+55,new_york,New York,3,2,34,5,1
+56,new_zealand_and_australia,New Zealand and Australia,3,2,38,8,1
+57,ottoman_empire,Ottoman Empire,3,2,38,5,1
+58,overworld,Overworld,3,2,74,6,1
+59,pangaea,Pangaea,3,2,65,7,1
+60,pirates_bay,Pirate's Bay,3,2,83,11,1
+61,qing_dynasty,Qing Dynasty,3,2,35,8,1
+62,red_sands_fort,Red Sands Fort,3,2,64,9,1
+63,redacted,REDACTED,3,2,47,11,1
+64,reverse_world,Reverse World,3,2,66,10,1
+65,river_town,River Town,3,2,24,7,1
+66,river_town_advanced,River Town [Advanced],3,2,68,12,1
+67,roman_empire,Roman Empire,3,2,43,7,1
+68,seagrogs_fortress,Seagrogs Fortress,3,2,76,7,1
+69,seaport,Seaport,3,2,41,8,1
+70,simple_world,Simple World,3,2,19,6,1
+71,skull_and_crossbones,Skull & Crossbones,3,2,44,7,1
+72,spaceport_sigma,Spaceport Sigma,3,2,96,10,1
+73,stairs_of_knowledge_and_power,Stairs of Knowledge & Power,3,2,41,12,1
+74,supermax_prison,Supermax Prison,3,2,42,7,1
+75,the_younger_scrolls,The Younger Scrolls,3,2,66,9,1
+76,trigons_labyrinth,Trigons Labyrinth,3,2,80,10,1
+77,troy,Troy,3,2,67,13,1
+78,turkey,Turkey,3,2,63,7,1
+79,united_states,United States,3,2,42,9,1
+80,world_conquest,World Conquest,3,2,47,6,1

@@ -1,1 +1,7 @@
-Map,Continent,TroopBonus,Color,TerritoryCount
+Id,Map,Continent,TroopBonus,Color,TerritoryCount
+1,classic,North America,5,#DD9D06,9
+2,classic,South America,3,#2B6B3C,4
+3,classic,Europe,5,#6FF2EA,7
+4,classic,Asia,7,#914C95,12
+5,classic,Australia,2,#E7CD0F,4
+6,classic,Africa,4,#D96316,6
