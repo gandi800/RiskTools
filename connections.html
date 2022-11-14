@@ -28,7 +28,11 @@
 
         .terHighlight {
             fill-opacity: 0.8;
-            fill: white;
+        }
+
+        .terSelected {
+            fill-opacity: 0.8;
+            fill: rgb(255, 0, 242);
         }
 
         .territory:hover {
@@ -54,6 +58,20 @@
                 rgb(0, 0, 0) 0.567324px -1.91785px 0px,
                 rgb(0, 0, 0) 1.41734px -1.41108px 0px,
                 rgb(0, 0, 0) 1.92034px -0.558831px 0px;
+        }
+
+        svg line {
+            stroke: rgb(109, 109, 109);
+            stroke-opacity: 0.5;
+            stroke-width: 2px;
+            stroke-dasharray: 8;
+        }
+
+        .shownLine {
+            stroke: white;
+            stroke-opacity: 1;
+            stroke-width: 2px;
+            stroke-dasharray: 8;
         }
 
         .wrapper {
@@ -269,7 +287,6 @@
             crossorigin="anonymous"></script>
         <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/datatables.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/alasql@2.1.6/dist/alasql.min.js"></script>
-        <script src="js/mapper.js"></script>
         <script src="js/main.js"></script>
         <script>
 
@@ -427,7 +444,10 @@
                         ])
                         .draw()
                         .node();
+                        DrawConnection( $(this)[0].TerritoryId,$(this)[0].ConenctedTerritoryId)
                 });
+
+                addConEdit();
 
             }
 
@@ -492,6 +512,98 @@
                 $('#contModal').modal('show');
             }
 
+            function DrawConnection(fromId, toId, editing = false) {
+                try {
+                    var svg = document.getElementById("mapSvg");
+
+                    var from = document.querySelector(`path[data-id="${fromId}"]`)
+                    var to = document.querySelector(`path[data-id="${toId}"]`)
+
+                    var id = `${fromId}${toId}`
+
+                    var fromB = from.getBBox();
+                    var fromX = fromB.x + fromB.width / 2
+                    var fromY = fromB.y + fromB.height / 2
+
+                    var toB = to.getBBox();
+                    var toX = toB.x + toB.width / 2
+                    var toY = toB.y + toB.height / 2
+
+
+                    var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                    newLine.setAttribute('id', id);
+                    newLine.setAttribute('x1', fromX);
+                    newLine.setAttribute('y1', fromY);
+                    newLine.setAttribute('x2', toX);
+                    newLine.setAttribute('y2', toY);
+                    newLine.setAttribute('data-from', fromId);
+                    newLine.setAttribute('data-to', toId);
+                    if(editing){
+                        newLine.setAttribute('stroke', 'white');
+                    }
+
+                    svg.appendChild(newLine);
+
+                } catch (error) {
+
+                }
+
+            }
+
+
+            function addConEdit() {
+                var paths = $("path");
+
+                $.each(paths, function () {
+                    $(this)[0].addEventListener("click", (event) => {
+                        if (event.shiftKey) {
+                            $(this)[0].classList.add("terSelected");
+                            fromId = $(this)[0].dataset.id;
+                            workingFromId = fromId;
+                            workingToIds = [];
+                            $.each(document.querySelectorAll(`line[data-from="${fromId}"]`), function () {
+                                $(this)[0].classList.add("shownLine");
+                                workingToIds.push($(this)[0].dataset.to)
+                                console.log($(this)[0].dataset.to)
+                            })
+                            DrawCurrentConenctions();
+                        }
+
+                    });
+                });
+
+                $.each(paths, function () {
+                    $(this)[0].addEventListener("dblclick", (event) => {
+                        fromId = $(this)[0].dataset.id;
+                        $(this)[0].classList.remove("terSelected");
+                        $.each(document.querySelectorAll(`line[data-from="${fromId}"]`), function () {
+                            $(this)[0].classList.remove("shownLine")
+                            workingFromId = null;
+                            workingToIds = [];
+                        })
+                    });
+                });
+            }
+
+            var workingFromId;
+            var workingToIds = [];
+
+            function DrawCurrentConenctions() {
+                workingToIds.forEach(val => {
+                    document.querySelector(`line[data-from="${workingFromId}"][data-to="${val}"]`)
+                    DrawConnection(workingFromId, val, true);
+                });
+            }
+
+            // shift click to edit
+                // if editing save current values to connection table then clear 
+                // start editing
+            // click
+                // if editing 
+                    // if connection doesn't already exist
+                        // add connection
+                    // else
+                        // remove conenction
 
         </script>
     </main>

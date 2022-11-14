@@ -37,13 +37,10 @@ const ev = new Event('MapLoaded');
 
 async function MapChange() {
     $("#mapImg").attr("src", `./img/${map}.png`);
-    var img = document.getElementById("mapImg");
 
     conts = await LoadContinents();
     terrs = await LoadTerritories();
     conns = await Loadconnections();
-    
-    window.initCanvas(img);
     
     document.dispatchEvent(ev);
 }
@@ -123,7 +120,7 @@ function DrawTerrPaths() {
     var terPath = document.createElementNS(
       "http://www.w3.org/2000/svg",
       "path"
-    ); //Create a path in SVG's namespace
+    );
     terPath.setAttribute("d", $(this)[0].Points);
     terPath.setAttribute("data-id", $(this)[0].Id);
     terPath.setAttribute("data-name", $(this)[0].TerritoryName);
@@ -135,7 +132,7 @@ function DrawTerrPaths() {
     svg.appendChild(terPath);
   });
 
-  addTerritoriesName();
+  //addTerritoriesName();
 }
 
 function addTerritoriesName() {

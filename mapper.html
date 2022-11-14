@@ -737,6 +737,8 @@
 
             document.addEventListener('MapLoaded', (e) => {
                 LoadMapdata();
+                ;
+                window.initCanvas(document.getElementById("mapImg"));
             }, false);
 
             function LoadMapdata() {
