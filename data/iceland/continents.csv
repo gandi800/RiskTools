@@ -1,1 +1,5 @@
 Id,Map,Continent,TroopBonus,Color,TerritoryCount
+0,iceland,Green,0,#306927,0
+1,iceland,Teal,0,#7dfaed,0
+2,iceland,Orange,0,#ff6105,0
+3,iceland,Red,0,#fe3f67,0

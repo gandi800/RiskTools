@@ -278,6 +278,24 @@
                             <div class="col-8">
                                 <h5 class="card-title">Step 2 - Continents</h5>
                             </div>
+                            <div class="col">
+                                <select class="form-select" id="colorDdl" onchange="SetColor(this)">
+                                    <option disabled selected>Select Color...</option>
+                                    <option value="#fe3f67" style="background-color:#fe3f67">Red</option>
+                                    <option value="#ff6105" style="background-color:#ff6105">Orange</option>
+                                    <option value="#f4ca01" style="background-color:#f4ca01">Yellow</option>
+                                    <option value="#306927" style="background-color:#306927">Green</option>
+                                    <option value="#7dfaed" style="background-color:#7dfaed">Teal</option>
+                                    <option value="#903587" style="background-color:#903587">Purple</option>
+                                    <option value="#8992f5" style="background-color:#8992f5">Blue</option>
+                                    <option value="#d283c5" style="background-color:#d283c5">Pink</option>
+                                    <option value="#328e62" style="background-color:#328e62">Lt Green</option>
+                                    <option value="#9778d6" style="background-color:#9778d6">Lt Purple</option>
+                                    <option value="#f8a200" style="background-color:#f8a200">Lt Orange</option>
+                                    <option value="#606f6d" style="background-color:#606f6d">Gray</option>
+                                    <option value="#192234" style="background-color:#192234">Black</option>
+                                </select>
+                            </div>
                             <div class="row">
                                 <div class="col">
                                     <label>Id</label>
@@ -297,7 +315,7 @@
                                 </div>
                                 <div class="col">
                                     <label>Color</label>
-                                    <input type="text" class="form-control" id="ciColor">
+                                    <input type="text" class="form-control" id="ciColor" onchange="SetInputcolor(this)">
                                 </div>
                                 <div class="col-1">
                                     <button type="button" class="btn btn-primary mt-4" onclick="ContAddUpdate()">
@@ -405,7 +423,7 @@
             <div class="modal-dialog modal-dialog-centered modal-xl">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="contModalLabel">Edit / Add Continents</h1>
+                        <h1 class="modal-title fs-5" id="contModalLabel">Export</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -493,6 +511,17 @@
                     scrollY: "150px",
                     searching: false
                 });
+            }
+
+            function SetColor(x){
+              $('#ciColor').val(x.value)
+              $('#ciColor').css('background-color',x.value);
+              $('#colorDdl').css('background-color',x.value);
+              $('#ciContName').val($('#colorDdl')[0].selectedOptions[0].innerText)
+              x.style.backgroundcolor = x.value;
+            }
+            function SetInputcolor(x){
+              $('#ciColor').css('background-color',x.value);
             }
 
             function CreateContRows() {
@@ -620,7 +649,7 @@
             }
 
             $(document).on('keypress', function (e) {
-                if (e.which == 13 && trace()) {
+                if ((e.which == 13 || e.which == 16) && trace()) {
                     TerAddUpdate();
                 }
             });

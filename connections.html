@@ -61,17 +61,22 @@
         }
 
         svg line {
-            stroke: rgb(109, 109, 109);
-            stroke-opacity: 0.5;
+            stroke: white;
+            stroke-opacity: 1;
             stroke-width: 2px;
             stroke-dasharray: 8;
         }
 
         .shownLine {
-            stroke: white;
+            stroke: rgb(60, 255, 0);
             stroke-opacity: 1;
-            stroke-width: 2px;
-            stroke-dasharray: 8;
+            stroke-width: 3px;
+            stroke-dasharray: 0;
+        }
+
+        .highlightLine {
+            stroke-width: 5px;
+            stroke-opacity: 1;
         }
 
         .wrapper {
@@ -315,79 +320,10 @@
                 });
             }
 
-            function DeleteConn(x) {
-                alasql.promise(`DELETE FROM Connections WHERE Id = ${x.dataset.id}`);
+            document.addEventListener('MapLoaded', (e) => {
                 CreateTerRows();
-            }
-
-            function EditConn(x) {
-                $('#tiId').val(x.dataset.id);
-                $('#tiName').val(x.dataset.territoryname);
-                $('#tiPoints').val(x.dataset.points);
-                $('#tiXOff').val(x.dataset.xoff);
-                $('#tiYOff').val(x.dataset.yoff);
-                $(`#tiCont`).val(x.dataset.continent);
-            }
-
-            $(document).on('keypress', function (e) {
-                if (e.which == 13 && trace()) {
-                    ConnAddUpdate();
-                }
-            });
-
-            function ConnAddUpdate() {
-                alasql.promise(`SELECT * FROM Connections WHERE Id = "${$('#tiId').val()}"`).then(function (res) {
-                    var ContId = $('#tiCont').val() ? $('#tiCont').val() : -1
-                    if (res.length > 0) {
-                        alasql.promise(`
-                                UPDATE Territories
-                                SET
-                                    Continent = "${ContId}", 
-                                    TerritoryName = "${$('#tiName').val()}",
-                                    NameXOffset = "${$('#tiXOff').val()}",
-                                    NameYOffset = "${$('#tiYOff').val()}",
-                                    Points = "${$('#tiPoints').val()}"
-                                WHERE 
-                                    Id = "${$('#tiId').val()}"`
-                        ).then(ClearTer());
-                    } else {
-                        alasql.promise(`
-                                INSERT INTO Territories
-                                (
-                                    Id,
-                                    Map,
-                                    Continent, 
-                                    TerritoryName, 
-                                    NameXOffset,
-                                    NameYOffset,
-                                    Points
-                                )
-                                VALUES (
-                                    "${$('#tiId').val()}",
-                                    "${map}",
-                                    "${ContId}",
-                                    "${$('#tiName').val()}",
-                                    "${$('#tiXOff').val()}",
-                                    "${$('#tiYOff').val()}",
-                                    "${$('#tiPoints').val()}"
-                                )
-                            `).then(ClearTer());
-                    }
-
-                });
-            }
-
-            function ClearTer() {
-                alasql.promise(`SELECT MAX(Id)+1 Id FROM Territories`
-                ).then(function (res) {
-                    $('#tiId').val(res[0].Id);
-                    $('#tiName').val("");
-                    $('#tiPoints').val("");
-                    $('#tiXOff').val(0);
-                    $('#tiYOff').val(0);
-                    CreateTerRows();
-                });
-            }
+                CreateConnRows();
+            }, false);
 
             function CreateTerRows() {
                 terrTbl.rows().remove().draw();
@@ -444,18 +380,18 @@
                         ])
                         .draw()
                         .node();
-                        DrawConnection( $(this)[0].TerritoryId,$(this)[0].ConenctedTerritoryId)
+                    DrawConnection($(this)[0].TerritoryId, $(this)[0].ConenctedTerritoryId)
                 });
 
                 addConEdit();
 
             }
 
-
             function clearTerHighlight() {
                 $.each(document.querySelectorAll(".terHighlight"), function () {
                     $(this)[0].classList.remove("terHighlight");
                 })
+
 
             }
 
@@ -465,84 +401,54 @@
                     y.classList.add("terHighlight");
                 }
             }
-
-            document.addEventListener('MapLoaded', (e) => {
-                CreateTerRows();
-                CreateConnRows();
-            }, false);
-
-            function exportMapData() {
-                var contData = "Id,Map,Continent,TroopBonus,Color,TerritoryCount\n";
-                var terData = "Id,Map,TerritoryName,Continent,NameXOffset,NameYOffset,Points\n";
-                $.each(alasql(`SELECT * FROM Maps WHERE Map ="${map}"`), function () {
-                    $('#mapExport').text(
-                        $(this)[0].Id + "," +
-                        map + "," +
-                        $(this)[0].Name + "," +
-                        $(this)[0].Blizzards + "," +
-                        $(this)[0].Portals + "," +
-                        $(this)[0].TotalTerritories + "," +
-                        $(this)[0].TotalContinents
-                    )
+            function ClearHighlightConnected() {
+                $.each(document.querySelectorAll(".highlightLine"), function () {
+                    $(this)[0].classList.remove("highlightLine");
                 })
-                $.each(alasql(`SELECT * FROM Continents`), function () {
-                    contData +=
-                        $(this)[0].Id + "," +
-                        map + "," +
-                        $(this)[0].Continent + "," +
-                        $(this)[0].TroopBonus + "," +
-                        $(this)[0].Color + "," +
-                        $(this)[0].TerritoryCount + "\n"
-                })
-
-                $('#contExport').text(contData);
-
-                $.each(alasql(`SELECT * FROM Territories`), function () {
-                    terData +=
-                        $(this)[0].Id + "," +
-                        map + "," +
-                        $(this)[0].TerritoryName + "," +
-                        $(this)[0].Continent + "," +
-                        $(this)[0].NameXOffset + "," +
-                        $(this)[0].NameYOffset + "," +
-                        $(this)[0].Points + "\n"
-                })
-
-                $('#terrExport').text(terData);
-                $('#contModal').modal('show');
             }
 
-            function DrawConnection(fromId, toId, editing = false) {
+            function HighlightConnencted(x) {
+                console.log(x)
+                $.each(document.querySelectorAll(`line[data-from="${x.dataset.id}"]`), function () {
+                    $(this)[0].classList.add('highlightLine');
+                })
+            }
+
+            function DrawConnection(a, b, editing = false) {
                 try {
-                    var svg = document.getElementById("mapSvg");
+                    var fromId = Math.min(a, b);
+                    var toId = Math.max(a, b)
+                    if (!document.querySelector(`line[data-from="${fromId}"][data-to="${toId}"]`)) {
+                        var svg = document.getElementById("mapSvg");
 
-                    var from = document.querySelector(`path[data-id="${fromId}"]`)
-                    var to = document.querySelector(`path[data-id="${toId}"]`)
+                        var from = document.querySelector(`path[data-id="${fromId}"]`)
+                        var to = document.querySelector(`path[data-id="${toId}"]`)
 
-                    var id = `${fromId}${toId}`
+                        var id = `${fromId}${toId}`
 
-                    var fromB = from.getBBox();
-                    var fromX = fromB.x + fromB.width / 2
-                    var fromY = fromB.y + fromB.height / 2
+                        var fromB = from.getBBox();
+                        var fromX = fromB.x + fromB.width / 2
+                        var fromY = fromB.y + fromB.height / 2
 
-                    var toB = to.getBBox();
-                    var toX = toB.x + toB.width / 2
-                    var toY = toB.y + toB.height / 2
+                        var toB = to.getBBox();
+                        var toX = toB.x + toB.width / 2
+                        var toY = toB.y + toB.height / 2
 
 
-                    var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-                    newLine.setAttribute('id', id);
-                    newLine.setAttribute('x1', fromX);
-                    newLine.setAttribute('y1', fromY);
-                    newLine.setAttribute('x2', toX);
-                    newLine.setAttribute('y2', toY);
-                    newLine.setAttribute('data-from', fromId);
-                    newLine.setAttribute('data-to', toId);
-                    if(editing){
-                        newLine.setAttribute('stroke', 'white');
+                        var newLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                        newLine.setAttribute('id', id);
+                        newLine.setAttribute('x1', fromX);
+                        newLine.setAttribute('y1', fromY);
+                        newLine.setAttribute('x2', toX);
+                        newLine.setAttribute('y2', toY);
+                        newLine.setAttribute('data-from', fromId);
+                        newLine.setAttribute('data-to', toId);
+                        if (editing) {
+                            newLine.classList.add('shownLine');
+                        }
+
+                        svg.appendChild(newLine);
                     }
-
-                    svg.appendChild(newLine);
 
                 } catch (error) {
 
@@ -550,6 +456,88 @@
 
             }
 
+            function EraseConnection(a, b) {
+                var fromId = Math.min(a, b);
+                var toId = Math.max(a, b)
+                document.querySelector(`line[data-from="${fromId}"][data-to="${toId}"]`).remove();
+            }
+
+            function AddConnection(a, b) {
+                var fromId = Math.min(a, b);
+                var toId = Math.max(a, b)
+                if (fromId != toId) {
+                    alasql.promise(`SELECT MAX(Id)+1 Id FROM Connections`
+                    ).then(function (res) {
+                        var id = res[0].Id ? res[0].Id : 0
+                        alasql(`INSERT INTO Connections (Id, TerritoryId, ConenctedTerritoryId)
+                           VALUES (${id},${fromId},${toId}); 
+                        `)
+                        DrawConnection(fromId, toId, true)
+                    });
+                }
+            }
+
+            function DeleteConnection(a, b) {
+                var fromId = Math.min(a, b);
+                var toId = Math.max(a, b)
+                alasql(`DELETE FROM Connections WHERE TerritoryId = ${fromId} AND ConenctedTerritoryId = ${toId}`);
+                EraseConnection(fromId, toId)
+            }
+
+            //==================================================================================================
+
+            var workingFromId;
+
+            function ClearEdit() {
+                workingFromId = null;
+                $.each(document.querySelectorAll('.terSelected'), function () {
+                    $(this)[0].classList.remove('terSelected');
+                })
+                $.each(document.querySelectorAll('.shownLine'), function () {
+                    $(this)[0].classList.remove('shownLine');
+                })
+            }
+
+            function SetEdit(el) {
+
+                if (workingFromId != el.dataset.id) {
+                    ClearEdit();
+                    workingFromId = el.dataset.id;
+                    if (workingFromId) {
+                        el.classList.add('terSelected');
+                        $.each(document.querySelectorAll(`line[data-from="${workingFromId}"]`), function () {
+                            $(this)[0].classList.add("shownLine")
+                        });
+                        $.each(document.querySelectorAll(`line[data-to="${workingFromId}"]`), function () {
+                            $(this)[0].classList.add("shownLine")
+                        });
+                    }
+                } else {
+                    ClearEdit();
+                }
+            }
+
+            function AddRemoveConnection(el) {
+                if (workingFromId) {
+                    var b = el.dataset.id;
+                    if (b && workingFromId != b) {
+                        var fromId = Math.min(workingFromId, b);
+                        var toId = Math.max(workingFromId, b)
+
+                        alasql.promise(`SELECT * FROM Connections WHERE TerritoryId = ${fromId} AND ConenctedTerritoryId = ${toId}`).then(function (res) {
+                            if (res.length > 0) {
+                                DeleteConnection(fromId, toId);
+                            } else {
+                                AddConnection(fromId, toId);
+                            }
+                        })
+                    }
+                }
+            }
+
+            document.addEventListener("dblclick", (event) => {
+                ClearEdit();
+            })
 
             function addConEdit() {
                 var paths = $("path");
@@ -557,49 +545,22 @@
                 $.each(paths, function () {
                     $(this)[0].addEventListener("click", (event) => {
                         if (event.shiftKey) {
-                            $(this)[0].classList.add("terSelected");
-                            fromId = $(this)[0].dataset.id;
-                            workingFromId = fromId;
-                            workingToIds = [];
-                            $.each(document.querySelectorAll(`line[data-from="${fromId}"]`), function () {
-                                $(this)[0].classList.add("shownLine");
-                                workingToIds.push($(this)[0].dataset.to)
-                                console.log($(this)[0].dataset.to)
-                            })
-                            DrawCurrentConenctions();
+                            SetEdit($(this)[0]);
+                        } else {
+
+                            AddRemoveConnection($(this)[0])
                         }
-
-                    });
-                });
-
-                $.each(paths, function () {
-                    $(this)[0].addEventListener("dblclick", (event) => {
-                        fromId = $(this)[0].dataset.id;
-                        $(this)[0].classList.remove("terSelected");
-                        $.each(document.querySelectorAll(`line[data-from="${fromId}"]`), function () {
-                            $(this)[0].classList.remove("shownLine")
-                            workingFromId = null;
-                            workingToIds = [];
-                        })
                     });
                 });
             }
 
-            var workingFromId;
-            var workingToIds = [];
 
-            function DrawCurrentConenctions() {
-                workingToIds.forEach(val => {
-                    document.querySelector(`line[data-from="${workingFromId}"][data-to="${val}"]`)
-                    DrawConnection(workingFromId, val, true);
-                });
-            }
 
             // shift click to edit
-                // if editing save current values to connection table then clear 
+                // if editing save current values to connection table then clear
                 // start editing
             // click
-                // if editing 
+                // if editing
                     // if connection doesn't already exist
                         // add connection
                     // else

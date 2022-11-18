@@ -1,1 +1,11 @@
 Id,Map,Continent,TroopBonus,Color,TerritoryCount
+0,canada,Teal,0,#7dfaed,0
+1,canada,Yellow,0,#f4ca01,0
+2,canada,Black,0,#192234,0
+3,canada,Orange,0,#ff6105,0
+4,canada,Red,0,#fe3f67,0
+5,canada,Green,0,#306927,0
+6,canada,Lt Green,0,#328e62,0
+7,canada,Lt Orange,0,#f8a200,0
+8,canada,Purple,0,#903587,0
+9,canada,LtPink,0,#d15581,0
