@@ -143,8 +143,12 @@
                                     <hr class="dropdown-divider" />
                                 </li>
                                 <li>
-                                    <a class="dropdown-item" target="_blank"
-                                        href="/svg-path-builder/svg-path-builder/dist/index.html">SVG Mapper</a>
+                                    <a class="dropdown-item" target="_blank" href="/mapper.html"><i
+                                            class="fa-regular fa-map"></i> Mapper</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" target="_blank" href="/connections.html"><i
+                                            class="fa-brands fa-connectdevelop"></i> Connector</a>
                                 </li>
                                 <li>
                                     <hr class="dropdown-divider" />
@@ -168,7 +172,89 @@
                         </li>
                     </ul>
                     <form class="w-25">
-                        <select class="form-select" id="mapSelect"></select>
+                        <select class="form-select" id="mapSelect">
+                            <option value="-1" disabled="disabled" selected="selected">Select Map...</option>
+                            <option value="classic">Classic</option>
+                            <option value="28_turns_later">28 Turns Later</option>
+                            <option value="africa">Africa</option>
+                            <option value="africa_advanced">Africa Advanced</option>
+                            <option value="alcatraz">Alcatraz</option>
+                            <option value="arctic">Arctic</option>
+                            <option value="asia_1800s">Asia 1800s</option>
+                            <option value="atlantis">Atlantis</option>
+                            <option value="blackbeards_wrath">Blackbeard's Wrath</option>
+                            <option value="bohus_fortress">Bohus Fortress</option>
+                            <option value="boston">Boston</option>
+                            <option value="brazil">Brazil</option>
+                            <option value="brazil_advanced">Brazil Advanced</option>
+                            <option value="britannia">Britannia</option>
+                            <option value="britannia_advanced">Britannia Advanced</option>
+                            <option value="canada">Canada</option>
+                            <option value="canada_advanced">Canada Advanced</option>
+                            <option value="castle">Castle</option>
+                            <option value="central_america">Central America</option>
+                            <option value="classic_frozen">Classic Frozen</option>
+                            <option value="command_base_c1x">Command Base C1X</option>
+                            <option value="conquest_of_stockholm">Conquest of Stockholm</option>
+                            <option value="conwy_castle">Conwy Castle</option>
+                            <option value="deutschland">Deutschland</option>
+                            <option value="dino_canyon">Dino Canyon</option>
+                            <option value="dino_world">Dino World</option>
+                            <option value="dracon_fortress">Dracon Fortress</option>
+                            <option value="draculas_castle">Dracula's Castle</option>
+                            <option value="earth_2209_ad">Earth 2209 AD</option>
+                            <option value="enchanted_lands">Enchanted Lands</option>
+                            <option value="europe">Europe</option>
+                            <option value="europe_advanced">Europe Advanced</option>
+                            <option value="forsaken_lands">Forsaken Lands</option>
+                            <option value="france">France</option>
+                            <option value="greece">Greece</option>
+                            <option value="grip_of_the_north">Grip of the North</option>
+                            <option value="himeji_castle">Himeji Castle</option>
+                            <option value="ibai_and_buddies">Ibai &amp; Buddies</option>
+                            <option value="iceland">Iceland</option>
+                            <option value="italy">Italy</option>
+                            <option value="japan">Japan</option>
+                            <option value="jules_vernes_mysterious_island">Jules Verne's Mysterious Island</option>
+                            <option value="koenigsberg">Koenigsberg</option>
+                            <option value="las_vegas_nevada">Las Vegas Nevada</option>
+                            <option value="los_angeles">Los Angeles</option>
+                            <option value="lost_temple">Lost Temple</option>
+                            <option value="lubeck">Lubeck</option>
+                            <option value="lunar_mining_facility">Lunar Mining Facility</option>
+                            <option value="machu_picchu">Machu Picchu</option>
+                            <option value="mall_of_the_dead">Mall of the Dead</option>
+                            <option value="modern_spain">Modern Spain</option>
+                            <option value="mont_saint_michel">Mont Saint Michel</option>
+                            <option value="moonstone_forest">Moonstone Forest</option>
+                            <option value="nan_madol">Nan Madol</option>
+                            <option value="new_york">New York</option>
+                            <option value="new_zealand_and_australia">New Zealand and Australia</option>
+                            <option value="ottoman_empire">Ottoman Empire</option>
+                            <option value="overworld">Overworld</option>
+                            <option value="pangaea">Pangaea</option>
+                            <option value="pirates_bay">Pirate's Bay</option>
+                            <option value="qing_dynasty">Qing Dynasty</option>
+                            <option value="redacted">REDACTED</option>
+                            <option value="red_sands_fort">Red Sands Fort</option>
+                            <option value="reverse_world">Reverse World</option>
+                            <option value="river_town">River Town</option>
+                            <option value="river_town_advanced">River Town [Advanced]</option>
+                            <option value="roman_empire">Roman Empire</option>
+                            <option value="seagrogs_fortress">Seagrogs Fortress</option>
+                            <option value="seaport">Seaport</option>
+                            <option value="simple_world">Simple World</option>
+                            <option value="skull_and_crossbones">Skull &amp; Crossbones</option>
+                            <option value="spaceport_sigma">Spaceport Sigma</option>
+                            <option value="stairs_of_knowledge_and_power">Stairs of Knowledge &amp; Power</option>
+                            <option value="supermax_prison">Supermax Prison</option>
+                            <option value="the_younger_scrolls">The Younger Scrolls</option>
+                            <option value="trigons_labyrinth">Trigons Labyrinth</option>
+                            <option value="troy">Troy</option>
+                            <option value="turkey">Turkey</option>
+                            <option value="united_states">United States</option>
+                            <option value="world_conquest">World Conquest</option>
+                        </select>
                     </form>
                 </div>
             </div>
@@ -216,8 +302,6 @@
                 </div>
             </div>
         </div>
-
-
         <div class="row mt-3">
             <div class="col">
                 <div class="card">
@@ -349,6 +433,14 @@
                 </div>
             </div>
             <div class="col">
+                <div class="row">
+                    <div class="col-3">
+                        <h5 class="card-title">Step 3 - Territories</h5>
+                    </div>
+                   <div class="col">
+                        <small>To add a territory first make sure you are scrolled to the top of the page, then left click and hold to start the selector. Move your mouse up and down to increase or decrease the area selected. You can do this multiple times by holding CTRL to continue selcting additional areas (Helpful for territories on the edge of map or territories in multiple sections). You can then press ENTER to add the territory or hit the SAVE button below.</small>
+                   </div>
+                </div>
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -494,7 +586,6 @@
             async function main() {
                 await CreateTables();
                 initDataTables();
-                initMapDdl();
             }
 
             function initDataTables() {
@@ -513,15 +604,15 @@
                 });
             }
 
-            function SetColor(x){
-              $('#ciColor').val(x.value)
-              $('#ciColor').css('background-color',x.value);
-              $('#colorDdl').css('background-color',x.value);
-              $('#ciContName').val($('#colorDdl')[0].selectedOptions[0].innerText)
-              x.style.backgroundcolor = x.value;
+            function SetColor(x) {
+                $('#ciColor').val(x.value)
+                $('#ciColor').css('background-color', x.value);
+                $('#colorDdl').css('background-color', x.value);
+                $('#ciContName').val($('#colorDdl')[0].selectedOptions[0].innerText)
+                x.style.backgroundcolor = x.value;
             }
-            function SetInputcolor(x){
-              $('#ciColor').css('background-color',x.value);
+            function SetInputcolor(x) {
+                $('#ciColor').css('background-color', x.value);
             }
 
             function CreateContRows() {
@@ -771,20 +862,21 @@
             }, false);
 
             function LoadMapdata() {
-                var res = alasql(`SELECT * FROM Maps WHERE Map = "${map}"`)
+                var res = alasql.promise(`SELECT * FROM Maps WHERE Map = "${map}"`).then(function (res) {
+                    $('#miMapId').val(res[0].Id)
+                    $('#miMapIdNm').val(res[0].Map)
+                    $('#miMapName').val(res[0].Name)
+                    $('#miBlizzards').val(res[0].Blizzards)
+                    $('#miPortals').val(res[0].Portals)
+                    $('#miTerritories').val(res[0].TotalTerritories)
+                    $('#miContinents').val(res[0].TotalContinents)
 
-                $('#miMapId').val(res[0].Id)
-                $('#miMapIdNm').val(res[0].Map)
-                $('#miMapName').val(res[0].Name)
-                $('#miBlizzards').val(res[0].Blizzards)
-                $('#miPortals').val(res[0].Portals)
-                $('#miTerritories').val(res[0].TotalTerritories)
-                $('#miContinents').val(res[0].TotalContinents)
+                    mapCont = res[0].TotalContinents;
+                    mapTer = res[0].TotalTerritories;
+                    CreateContRows();
+                    CreateTerRows();
+                })
 
-                mapCont = res[0].TotalContinents;
-                mapTer = res[0].TotalTerritories;
-                CreateContRows();
-                CreateTerRows();
             }
 
             function UpdateMapdata() {

@@ -3,9 +3,62 @@ var conts;
 var terrs;
 var conns;
 
+var ColorGradientSteps = new Array(9);
+ColorGradientSteps[4] = ["#35ff14", "#c3c500", "#f28100", "#f33535"];
+ColorGradientSteps[5] = ["#35ff14", "#aed400", "#e0a400", "#f66f00", "#f33535"];
+ColorGradientSteps[6] = [
+  "#35ff14",
+  "#a0dd00",
+  "#d0b800",
+  "#ec8f00",
+  "#f86400",
+  "#f33535",
+];
+ColorGradientSteps[7] = [
+  "#35ff14",
+  "#95e300",
+  "#c3c500",
+  "#e0a400",
+  "#f28100",
+  "#f85c02",
+  "#f33535",
+];
+ColorGradientSteps[8] = [
+  "#35ff14",
+  "#8ce700",
+  "#b8ce00",
+  "#d5b300",
+  "#e99500",
+  "#f57700",
+  "#f8570f",
+  "#f33535",
+];
+ColorGradientSteps[9] = [
+  "#35ff14",
+  "#86ea00",
+  "#aed400",
+  "#cbbd00",
+  "#e0a400",
+  "#ee8a00",
+  "#f66f00",
+  "#f85316",
+  "#f33535",
+];
+ColorGradientSteps[10] = [
+  "#35ff14",
+  "#80ed00",
+  "#a7d900",
+  "#c3c500",
+  "#d8af00",
+  "#e79900",
+  "#f28100",
+  "#f76900",
+  "#f84f1b",
+  "#f33535",
+];
+
 async function initMapDdl() {
   maps = await LoadMaps();
-
   $.each(maps, function () {
     $("#mapSelect").append(
       $("<option>", {
@@ -27,22 +80,22 @@ async function initMapDdl() {
 }
 
 $("#mapSelect").change(function () {
-    map = $(this).val();
-    if (map != -1) {
-        MapChange();
-    }
+  map = $(this).val();
+  if (map != -1) {
+    MapChange();
+  }
 });
 
-const ev = new Event('MapLoaded');
+const ev = new Event("MapLoaded");
 
 async function MapChange() {
-    $("#mapImg").attr("src", `./img/${map}.png`);
+  $("#mapImg").attr("src", `./img/${map}.png`);
+  maps = await LoadMaps();
+  conts = await LoadContinents();
+  terrs = await LoadTerritories();
+  conns = await Loadconnections();
 
-    conts = await LoadContinents();
-    terrs = await LoadTerritories();
-    conns = await Loadconnections();
-    
-    document.dispatchEvent(ev);
+  document.dispatchEvent(ev);
 }
 
 async function CreateTables() {
@@ -58,13 +111,9 @@ async function CreateTables() {
   alasql(
     "CREATE TABLE Connections (Id number, TerritoryId number, ConenctedTerritoryId number)"
   );
-  alasql(
-    "CREATE TABLE TmpConnections (Id, Map string, TerritoryId number, ConenctedTerritoryId number)"
-  );
-  alasql("CREATE TABLE Blizzards (BlizzardTerritoryId Number)");
+  alasql("CREATE TABLE TmpConns (TerritoryId number, ConnectedCt number)");
+  alasql("CREATE TABLE Blizzards (BlizzardTerritoryId number)");
 }
-
-
 
 async function LoadMaps() {
   await alasql.promise(`DELETE FROM Maps`);
@@ -100,12 +149,11 @@ async function Loadconnections() {
   await alasql.promise(`DELETE FROM Connections`);
   await alasql.promise(
     `SELECT * INTO Connections FROM CSV("data/` +
-    map +
-    `/connections.csv", {headers:true})`
+      map +
+      `/connections.csv", {headers:true})`
   );
   return await alasql(`SELECT * FROM Connections`);
 }
-
 
 function DrawTerrPaths() {
   var svg = document.getElementById("mapSvg");
@@ -122,6 +170,7 @@ function DrawTerrPaths() {
       "path"
     );
     terPath.setAttribute("d", $(this)[0].Points);
+    terPath.setAttribute("id", $(this)[0].Id);
     terPath.setAttribute("data-id", $(this)[0].Id);
     terPath.setAttribute("data-name", $(this)[0].TerritoryName);
     terPath.setAttribute("data-xoff", $(this)[0].NameXOffset);
@@ -163,4 +212,25 @@ function addText(d) {
   t.textContent = name;
   t.setAttribute("class", "names");
   p.parentNode.insertBefore(t, p.nextSibling);
+}
+
+function addTextToId(id, text) {
+  var d = document.getElementById(id);
+  //if (typeof p.getBBox == 'function') {
+  var t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+  var b = d.getBBox();
+
+  var x = d.dataset.xoff * 1;
+  var y = d.dataset.yoff * 1;
+  t.setAttribute(
+    "transform",
+    "translate(" +
+      (b.x + b.width / 2 + x) +
+      " " +
+      (b.y + b.height / 2 + y) +
+      ")"
+  );
+  t.textContent = text;
+  t.setAttribute("class", "names");
+  d.parentNode.insertBefore(t, d.nextSibling);
 }

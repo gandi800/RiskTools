@@ -1,1 +1,8 @@
 Id,Map,Continent,TroopBonus,Color,TerritoryCount
+0,enchanted_lands,Red,0,#fe3f67,0
+1,enchanted_lands,Lt Purple,0,#9778d6,0
+2,enchanted_lands,Pink,0,#d283c5,0
+3,enchanted_lands,Yellow,0,#f4ca01,0
+4,enchanted_lands,Lt Green,0,#328e62,0
+5,enchanted_lands,Blue,0,#4b5be2,0
+6,enchanted_lands,Teal,0,#7dfaed,0

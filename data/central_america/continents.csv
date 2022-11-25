@@ -1,1 +1,12 @@
 Id,Map,Continent,TroopBonus,Color,TerritoryCount
+0,central_america,Purple,0,#903587,0
+1,central_america,Orange,0,#ff6105,0
+2,central_america,Teal,0,#7dfaed,0
+3,central_america,Yellow,0,#f4ca01,0
+4,central_america,Red,0,#fe3f67,0
+5,central_america,Black,0,#192234,0
+6,central_america,Lt Green,0,#328e62,0
+7,central_america,Blue,0,#8992f5,0
+8,central_america,Lt Orange,0,#f8a200,0
+9,central_america,Lt Purple,0,#9778d6,0
+10,central_america,Yellow 2,0,#f4ca01,0
